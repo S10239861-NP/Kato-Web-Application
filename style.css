@@ -1,0 +1,51 @@
+body {
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.main-content-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 8px;
+}
+
+.input-fields-container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    row-gap: 8px;
+}
+
+.input-fields-container > label {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.input-fields-container > input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-input-box {
+    min-width: 400px;
+    margin-left: 8px;
+}
+
+.login-button {
+    width: min-content;
+    padding: 4px;
+}
+
+.show-password-checkbox {
+    width: min-content;
+    height: min-content;
+    margin-left: 8px;
+}
