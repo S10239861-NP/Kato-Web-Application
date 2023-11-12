@@ -1,0 +1,178 @@
+/* GOOGLE FONTS*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+a{
+    text-decoration: none;
+}
+
+/*login*/
+.login{
+    position: relative;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.login_bg{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.login_form{
+    position: relative;
+    margin-inline:1.5rem;
+    background-color: hsla(0,0%,100%,0.01);
+    border: 2px solid  hsla(0,0%,100%,0.7);
+    padding: 2.5rem 1rem;
+    color: white;
+    border-radius: 1rem;
+    backdrop-filter: blur(16px);
+}
+
+.login_title{
+    text-align: center;
+    font-size: 2rem; /*h1 font size in vid , normal size is 1 rem, small is.813*/
+    margin-bottom: 1.25rem;
+    color: white;
+}
+
+.login_inputs,
+.login_box{
+    display: grid;
+}
+
+.login_inputs{
+    row-gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.login_box{
+    grid-template-columns: 1fr max-content;
+    column-gap: .75rem;
+    align-items: center;
+    border:2px solid hsla(0,0%,100%,.7);
+    padding-inline:1.25rem;
+    border-radius:4rem;
+}
+
+.login_input{
+    border:none;
+    outline: none;
+}
+
+.login_input{
+    width: 100%;
+    background-color: transparent;
+    padding-block: 1rem;
+}
+
+.login_input::placeholder{
+    color:white;/*change to white after fix8*/
+    font-size: 1rem;
+}
+
+.login_box i{
+    color: white;
+}
+
+.login_button{
+    width: 100%;
+    padding:1rem;
+    margin-bottom:1rem;
+    background-color: transparent;/*fix edi change to white*/
+    border-radius: 4rem;
+    color:white;/*fix edi change to black*/
+    font-weight: 500;
+    cursor: pointer;
+    border-color: white;
+    font-size: 1rem;
+}
+
+.login_button:hover{
+    background-color: white;
+    color:black;
+    transition:1s;
+
+}
+
+
+
+.login_passchange a{
+    color:rgb(48, 202, 249);/*fix edi change to white*/
+    font-weight: 500;
+}
+
+.login_passchange a:hover{
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 576px){
+    .login{
+        justify-content: center;
+    }
+    .login_form{
+        width: 420px;
+        padding-inline: 2.5rem;
+    }
+    .login_title{
+        margin-bottom: 2rem;
+    }
+    
+}
+/*
+body {
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.main-content-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 8px;
+}
+
+.input-fields-container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    row-gap: 8px;
+}
+
+.input-fields-container > label {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.input-fields-container > input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-input-box {
+    min-width: 400px;
+    margin-left: 8px;
+}
+
+.login-button {
+    width: min-content;
+    padding: 4px;
+}
+
+.show-password-checkbox {
+    width: min-content;
+    height: min-content;
+    margin-left: 8px;
+}
+*/

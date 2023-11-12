@@ -1,0 +1,14 @@
+{
+  "name": "kato-web-application",
+  "version": "1.0.0",
+  "description": "The Kato web application.",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arcane",
+  "license": "ISC",
+  "dependencies": {
+    "istextorbinary": "^7.0.0"
+  }
+}
