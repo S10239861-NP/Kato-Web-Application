@@ -71,7 +71,7 @@ a{
 }
 
 .login_input::placeholder{
-    color:white;/*change to white after fix8*/
+    color:white; /*change to white after fix*/
     font-size: 1rem;
 }
 
@@ -99,8 +99,6 @@ a{
 
 }
 
-
-
 .login_passchange a{
     color:rgb(48, 202, 249);/*fix edi change to white*/
     font-weight: 500;
@@ -120,8 +118,7 @@ a{
     }
     .login_title{
         margin-bottom: 2rem;
-    }
-    
+    }  
 }
 /*
 body {
