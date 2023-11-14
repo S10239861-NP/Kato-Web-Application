@@ -1,0 +1,25 @@
+We will be using JSON web tokens (JWTs) for authentication.
+
+We will be using cookies to allow the browser (client) to automatically send the token (that the client receives only after a
+successful login) along with every request (regardless of whether it is a "GET" request, "POST" request or another type of request).
+
+Making use of cookies will also allow us to enforce that certain webpages can only be accessed by clients that have logged in
+successfully to an account (as cookies are automatically sent with every "GET" request).
+
+There are 3 ways we can send a token with a "GET" request to the server:
+- As a URL query parameter.
+- As a cookie.
+- Using XMLHttpRequest and including the token in its body or as a separate header.
+
+Disadvantages of sending a token as a URL query parameter:
+- The token will be visible in the user's browser history (which they might not clear) and in server logs, if the token has not expired
+yet, this could allow a threat actor with access to the user's browser history or the server logs to impersonate the actual user.
+
+Disadvantages of sending a token in the body or as a separate header in an XMLHttpRequest:
+- This method cannot be used for ensuring that the browser sends the token with each "GET" request made to the server for a resource
+(e.g. a HTML, CSS, JS, or image file etc).
+
+Additional notes regarding cookies:
+- By default, cookies are cleared once the user closes their browser.
+- A cookie can be deleted by setting its expiry date to a past date.
+- Cookies can be set on the browser by a response from the server by setting the value of the "Set-Cookie" header (for the response).

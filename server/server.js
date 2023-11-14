@@ -8,6 +8,12 @@ const istextorbinary = require("istextorbinary");
 
 const sqlite = require("sqlite3");
 
+const jwt = require("jsonwebtoken");
+
+const cookie = require("cookie");
+
+const jwtSecret = "0RAeW74P3LMFUSX";
+
 const serverHostName = "127.0.0.1";
 
 const serverPort = 3000;
@@ -35,15 +41,168 @@ function logError(error)
 
 /**
  * 
- * @param {url.URL} requestURL 
  * @param {http.ServerResponse} response 
  */
-function handleResourceRequest(requestURL, response)
+function returnInternalErrorResponse(response)
+{
+    response.writeHead(500, "Internal Server Error");
+
+    response.write(
+        "An error occurred on the server while it was processing your request. Please report this issue to the site administrator."
+    );
+
+    response.end();
+}
+
+/**
+ * 
+ * @param {http.ServerResponse} response 
+ */
+function returnNotFoundResponse(response)
+{
+    response.writeHead(404, "Not Found");
+
+    response.write(
+        "The requested resource was not found."
+    );
+
+    response.end();
+}
+
+/**
+ * Warning: Do not use this function as it might break if there are multiple cookies (with 1 or more cookies having a specified
+ * expiry date and time) and return incorrect or misleading values. Use the "cookie" library instead.
+ * @param {http.IncomingMessage} request 
+ */
+function getCookies(request)
+{
+    let cookies = [];
+
+    if (request.headers.cookie == undefined)
+    {
+        return cookies;
+    }
+
+    let cookieKeyValuePairs = request.headers.cookie.split(";");
+
+    for (const cookieKeyValuePair of cookieKeyValuePairs)
+    {
+        let cookieKeyValuePairParts = cookieKeyValuePair.split("=");
+
+        let cookieKey = cookieKeyValuePairParts[0];
+
+        let cookieValue = cookieKeyValuePairParts[1];
+
+        cookies.push(
+            {
+                key: cookieKey,
+                value: cookieValue
+            }
+        );
+    }
+
+    return cookies;
+}
+
+/**
+ * 
+ * @param {http.IncomingMessage} request 
+ * @param {string} cookieKey 
+ * @returns {boolean}
+ */
+function hasCookie(request, cookieKey)
+{
+    /*
+    Do not use the commented out implementation of this function as it relies on another function (called "getCookies") that might
+    break if there are multiple cookies (with 1 or more cookies having a specified expiry date and time).
+    */
+    /*
+    let requestCookies = getCookies(request);
+
+    for (const requestCookie of requestCookies)
+    {
+        if (requestCookie.key == cookieKey)
+        {
+            return true;
+        }
+    }
+
+    return false;
+    */
+
+    if (request.headers.cookie == undefined)
+    {
+        return false;
+    }
+
+    let requestCookies = cookie.parse(request.headers.cookie);
+
+    if (requestCookies[cookieKey] == undefined)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * 
+ * @param {http.IncomingMessage} request
+ * @returns {boolean}
+ */
+function verifyAuthToken(request)
+{
+    if (request.headers.cookie == undefined)
+    {
+        return false;
+    }
+
+    let requestCookies = cookie.parse(request.headers.cookie);
+
+    if (requestCookies["authToken"] == undefined)
+    {
+        return false;
+    }
+
+    try
+    {
+        jwt.verify(requestCookies["authToken"], jwtSecret);
+    }
+    catch (error)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * 
+ * @param {http.IncomingMessage} request
+ * @param {url.URL} requestURL
+ * @param {http.ServerResponse} response
+ */
+function handleResourceRequest(request, requestURL, response)
 {
     let targetResourceFilePath = "";
 
+    let requestURLPathParts = requestURL.pathname.split("/");
+
+    let requestedResourceName = requestURLPathParts[requestURLPathParts.length - 1];
+
     if (requestURL.pathname != "/")
     {
+        if (resourcePathsRequiringAuth.includes(requestURL.pathname) == true && verifyAuthToken(request) == false)
+        {
+            response.writeHead(403, "Forbidden");
+
+            response.write("Access denied.");
+
+            response.end();
+
+            return;
+        }
+
         targetResourceFilePath = "./client" + requestURL.pathname;
     }
     else
@@ -61,10 +220,23 @@ function handleResourceRequest(requestURL, response)
 
             logError(error);
 
+            returnNotFoundResponse(response);
+
             return;
         }
 
-        response.writeHead(200, "Success");
+        if (requestURL.pathname != "/")
+        {
+            response.writeHead(200, "Success");
+        }
+        else
+        {
+            response.writeHead(200, "Success", {
+                "set-cookie": cookie.serialize("authToken", "", {
+                    expires: new Date(0)
+                })
+            });
+        }
 
         if (istextorbinary.isText(targetResourceFilePath) == true)
         {
@@ -86,7 +258,7 @@ function handleResourceRequest(requestURL, response)
  */
 function onRequestReceived(request, response)
 {
-    let requestURL = new URL(request.url, "http://localhost:3000");
+    let requestURL = new URL(request.url, `http://localhost:${serverPort}`);
 
     if (request.method == "GET")
     {
@@ -96,7 +268,7 @@ function onRequestReceived(request, response)
 
         if (requestURL.pathname == "/" || requestURLPathLastPart.includes(".") == true)
         {
-            handleResourceRequest(requestURL, response);
+            handleResourceRequest(request, requestURL, response);
 
             return;
         }
@@ -116,14 +288,76 @@ function onRequestReceived(request, response)
             {
                 let requestBodyObj = JSON.parse(requestBody);
 
+                katoDB.all(
+                    `SELECT * FROM Employees WHERE StaffID = ? AND Password = ?;`,
+                    [requestBodyObj.staffID, requestBodyObj.password],
+                    (error, rows) =>
+                    {
+                        if (error != null)
+                        {
+                            console.log(
+                                "An error occurred while attempting to fetch rows from the Employees table of the main database."
+                            );
 
+                            logError(error);
+
+                            returnInternalErrorResponse(response);
+
+                            return;
+                        }
+
+                        if (rows.length > 0)
+                        {
+                            jwt.sign(
+                                {
+                                    staffID: rows[0].StaffID,
+                                    password: rows[0].Password
+                                },
+                                jwtSecret,
+                                (jwtSigningError, token) =>
+                                {
+                                    if (jwtSigningError != null)
+                                    {
+                                        console.log("An error occurred while attempting to sign a JSON web token.");
+
+                                        logError(jwtSigningError);
+
+                                        returnInternalErrorResponse(response);
+
+                                        return;
+                                    }
+
+                                    response.writeHead(200, "Success", {
+                                        "set-cookie": cookie.serialize("authToken", token)
+                                    });
+
+                                    response.write(
+                                        ""
+                                    );
+
+                                    response.end();
+                                }
+                            );
+                        }
+                        else
+                        {
+                            response.writeHead(200, "Success");
+
+                            response.write(
+                                "Incorrect credentials."
+                            );
+
+                            response.end();
+                        }
+                    }
+                );
             });
+
+            return;
         }
     }
 
-    response.writeHead(404, "Not Found");
-
-    response.end();
+    returnNotFoundResponse(response);
 }
 
 function start()
@@ -183,15 +417,33 @@ function start()
     );
 }
 
+/**
+ * Reserved for performing 1 or more experimental procedures. Solely to be used for development and testing purposes.
+ */
+function runExperimentalTests()
+{
+
+}
+
+/**
+ * The main backend server for the Kato web application.
+ * @type {http.Server}
+ */
 let server = http.createServer(onRequestReceived);
 
 let landingPageResourcePath = "/index.html";
 
 let katoDBFilePath = __dirname + "/databases/Kato-DB.db";
 
+/**
+ * The main database for the Kato web application.
+ * @type {sqlite.Database}
+ */
 let katoDB = null;
 
 let setupKatoDB = false;
+
+let resourcePathsRequiringAuth = ["/Training.html"];
 
 if (fs.existsSync(katoDBFilePath) == false)
 {
@@ -209,5 +461,36 @@ katoDB = new sqlite.Database(katoDBFilePath, sqlite.OPEN_READWRITE | sqlite.OPEN
         return;
     }
 
+    runExperimentalTests();
+
     start();
 });
+
+/*
+For future reference:
+We will be using JSON web tokens (JWTs) for authentication (user authentication).
+
+We will be using cookies to allow the browser (client) to automatically send the token (that the client receives only after a
+successful login) along with every request (regardless of whether it is a "GET" request, "POST" request or another type of request).
+
+Making use of cookies will also allow us to enforce that certain webpages can only be accessed by clients that have logged in
+successfully to an account (as cookies are automatically sent with every "GET" request).
+
+There are 3 ways we can send a token with a "GET" request to the server:
+- As a URL query parameter.
+- As a cookie.
+- Using XMLHttpRequest and including the token in its body or as a separate header.
+
+Disadvantages of sending a token as a URL query parameter:
+- The token will be visible in the user's browser history (which they might not clear) and in server logs, if the token has not expired
+yet, this could allow a threat actor with access to the user's browser history or the server logs to impersonate the actual user.
+
+Disadvantages of sending a token in the body or as a separate header in an XMLHttpRequest:
+- This method cannot be used for ensuring that the browser sends the token with each "GET" request made to the server for a resource
+(e.g. a HTML, CSS, JS, or image file etc).
+
+Additional notes regarding cookies:
+- By default, cookies are cleared once the user closes their browser.
+- A cookie can be deleted by setting its expiry date to a past date.
+- Cookies can be set on the browser by a response from the server by setting the value of the "Set-Cookie" header (for the response).
+*/

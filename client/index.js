@@ -10,6 +10,19 @@ loginButton.addEventListener("mousedown", () =>
 
     request.open("POST", "/login", true);
 
+    request.onload = (progressEvent) =>
+    {
+        if (request.readyState == XMLHttpRequest.DONE && request.status == 200 && request.responseText != "Incorrect credentials.")
+        {
+            window.location.href = "Training.html";
+        }
+    };
+
+    request.onerror = (progressEvent) =>
+    {
+        console.error(request.statusText);
+    };
+
     request.send(
         JSON.stringify(
             {
@@ -17,5 +30,5 @@ loginButton.addEventListener("mousedown", () =>
                 password: passwordInput.value
             }
         )
-    );
+    );    
 });
