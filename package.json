@@ -9,6 +9,7 @@
   "author": "Arcane",
   "license": "ISC",
   "dependencies": {
-    "istextorbinary": "^7.0.0"
+    "istextorbinary": "^7.0.0",
+    "sqlite3": "^5.1.6"
   }
 }

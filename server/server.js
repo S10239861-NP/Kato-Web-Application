@@ -6,6 +6,8 @@ const fs = require("fs");
 
 const istextorbinary = require("istextorbinary");
 
+const sqlite = require("sqlite3");
+
 const serverHostName = "127.0.0.1";
 
 const serverPort = 3000;
@@ -86,28 +88,114 @@ function onRequestReceived(request, response)
 {
     let requestURL = new URL(request.url, "http://localhost:3000");
 
-    let requestURLPathParts = requestURL.pathname.split("/");
-
-    let requestURLPathLastPart = requestURLPathParts[requestURLPathParts.length - 1];
-
-    if (requestURL.pathname == "/" || requestURLPathLastPart.includes(".") == true)
+    if (request.method == "GET")
     {
-        handleResourceRequest(requestURL, response);
+        let requestURLPathParts = requestURL.pathname.split("/");
+
+        let requestURLPathLastPart = requestURLPathParts[requestURLPathParts.length - 1];
+
+        if (requestURL.pathname == "/" || requestURLPathLastPart.includes(".") == true)
+        {
+            handleResourceRequest(requestURL, response);
+
+            return;
+        }
     }
+    else if (request.method == "POST")
+    {
+        if (requestURL.pathname == "/login")
+        {
+            let requestBody = "";
+
+            request.on("data", (chunk) =>
+            {
+                requestBody += chunk;
+            });
+
+            request.on("end", () =>
+            {
+                let requestBodyObj = JSON.parse(requestBody);
+
+
+            });
+        }
+    }
+
+    response.writeHead(404, "Not Found");
+
+    response.end();
+}
+
+function start()
+{
+    katoDB.serialize(() =>
+    {
+        katoDB.run(
+            `CREATE TABLE IF NOT EXISTS Employees (
+                StaffID TEXT PRIMARY KEY,
+                Password TEXT,
+                FirstName TEXT,
+                LastName TEXT
+            );`
+        );
+    
+        katoDB.run(
+            `INSERT INTO Employees VALUES (
+                'S001',
+                'abc',
+                'John',
+                'Doe'
+            );`
+        );
+    
+        katoDB.run(
+            `INSERT INTO Employees VALUES (
+                'S002',
+                'def',
+                'Jane',
+                'Doe'
+            );`
+        );
+    
+        katoDB.run(
+            `INSERT INTO Employees VALUES (
+                'S003',
+                'ghi',
+                'Mary',
+                'Poppins'
+            );`
+        );
+    });
+
+    server.listen(
+        serverPort,
+        serverHostName,
+        null,
+        () =>
+        {
+            console.log(`Server started.`);
+    
+            console.log(`Listening on port ${serverPort}...`);
+        }
+    );
 }
 
 let server = http.createServer(onRequestReceived);
 
 let landingPageResourcePath = "/index.html";
 
-server.listen(
-    serverPort,
-    serverHostName,
-    null,
-    () =>
-    {
-        console.log(`Server started.`);
+let katoDB = null;
 
-        console.log(`Listening on ${serverPort}...`);
+katoDB = new sqlite.Database(__dirname + "/databases/Kato-DB.db", sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (error) =>
+{
+    if (error != null)
+    {
+        console.log("An error occurred while attempting to connect to the database.");
+
+        logError(error);
+
+        return;
     }
-);
+
+    start();
+});
