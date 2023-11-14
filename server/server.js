@@ -130,41 +130,44 @@ function start()
 {
     katoDB.serialize(() =>
     {
-        katoDB.run(
-            `CREATE TABLE IF NOT EXISTS Employees (
-                StaffID TEXT PRIMARY KEY,
-                Password TEXT,
-                FirstName TEXT,
-                LastName TEXT
-            );`
-        );
+        if (setupKatoDB == true)
+        {
+            katoDB.run(
+                `CREATE TABLE Employees (
+                    StaffID TEXT PRIMARY KEY,
+                    Password TEXT,
+                    FirstName TEXT,
+                    LastName TEXT
+                );`
+            );
     
-        katoDB.run(
-            `INSERT INTO Employees VALUES (
-                'S001',
-                'abc',
-                'John',
-                'Doe'
-            );`
-        );
-    
-        katoDB.run(
-            `INSERT INTO Employees VALUES (
-                'S002',
-                'def',
-                'Jane',
-                'Doe'
-            );`
-        );
-    
-        katoDB.run(
-            `INSERT INTO Employees VALUES (
-                'S003',
-                'ghi',
-                'Mary',
-                'Poppins'
-            );`
-        );
+            katoDB.run(
+                `INSERT INTO Employees VALUES (
+                    'S001',
+                    'abc',
+                    'John',
+                    'Doe'
+                );`
+            );
+        
+            katoDB.run(
+                `INSERT INTO Employees VALUES (
+                    'S002',
+                    'def',
+                    'Jane',
+                    'Doe'
+                );`
+            );
+        
+            katoDB.run(
+                `INSERT INTO Employees VALUES (
+                    'S003',
+                    'ghi',
+                    'Mary',
+                    'Poppins'
+                );`
+            );
+        }
     });
 
     server.listen(
@@ -184,9 +187,18 @@ let server = http.createServer(onRequestReceived);
 
 let landingPageResourcePath = "/index.html";
 
+let katoDBFilePath = __dirname + "/databases/Kato-DB.db";
+
 let katoDB = null;
 
-katoDB = new sqlite.Database(__dirname + "/databases/Kato-DB.db", sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (error) =>
+let setupKatoDB = false;
+
+if (fs.existsSync(katoDBFilePath) == false)
+{
+    setupKatoDB = true;
+}
+
+katoDB = new sqlite.Database(katoDBFilePath, sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (error) =>
 {
     if (error != null)
     {
