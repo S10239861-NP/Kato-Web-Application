@@ -5,7 +5,7 @@ a{
     text-decoration: none;
 }
 
-/*login*/
+/*-------------------------------------LOGIN------------------------------------------------*/
 .login{
     position: relative;
     height: 100vh;
@@ -14,7 +14,7 @@ a{
     font-size: 1rem;
 }
 
-body{
+.login_body{
     margin:0px;
 }
 
@@ -124,6 +124,26 @@ body{
         margin-bottom: 2rem;
     }  
 }
+
+/*--------------------------------------TRAINING-----------------------------------------------*/
+.training_body{
+    width:100%;
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 2rem;
+    background-color: black;
+    color: white;
+}
+
 /*
 body {
     margin: 0px;
