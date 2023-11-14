@@ -1,26 +1,63 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<title>Homepage</title>
-</head>
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="training_pg">
+    <head>
+        <meta charset="UTF-8">
+        <title>Training</title>
+        <link rel="stylesheet" href="style.css">
+        <!--Boxicon link-->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <meta name="viewport"content="width=device-width, initial-scale=1.0">
+    </head>
 <body class="training_body">
-    <!--sidebar-->
     <div class="sidebar">
-        <h1 class="logo">Kato</h1>
-        <div class="menu">
-            <a href="#">Home</a>
-            <a href="#">Profile</a>
-            <a href="#">Training</a>
-            <a href="#">Others</a>
-            <a href="#">Profile</a>
+        <div class="logo_content">
+            <div class="logo">
+                <i class='bx bxl-kickstarter'></i>
+                <div class="logo_name">Kato</div>
+            </div>
+            <i class='bx bx-menu'id="menu_btn" ></i>
+        </div>
+        <ul class="nav_list">
+           <li>
+            <a href="#">
+                <i class='bx bxs-home' ></i>
+                <span class="link_names">Home</span>
+            </a>
+           </li>
+
+           <li>
+            <a href="#">
+                <i class='bx bx-check-square' ></i>
+                <span class="link_names">Checklist</span>
+            </a>
+           </li>
+
+           <li>
+            <a href="#">
+                <i class='bx bx-briefcase-alt'></i>
+                <span class="link_names">Training</span>
+            </a>
+           </li>
+
+           <li>
+            <a href="#">
+                <i class='bx bx-user-circle' ></i>
+                <span class="link_names">Profile</span>
+            </a>
+           </li>
+        </ul>
+        <div class="profile_content">
+            <div class="profile">
+                <div class="profile_details">
+                    <img src="\images\profile.jpg" alt="">
+                    <div class="name_job">
+                        <div class="name">lulu</div>
+                        <div class="job">Web Designer</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="logout" ></i>
+            </div>
         </div>
     </div>
 </body>
-
 </html>
