@@ -142,7 +142,10 @@ a{
     min-height: 100vh;
     width: 100%;
     overflow: hidden;
+    margin:0px
 }
+
+
 
 /*--------------------------------------DASHBOARD-----------------------------------------------*/
 .dashboard_pg{
