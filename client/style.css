@@ -142,12 +142,17 @@ a{
 
 .sidebar{
     height: 100%;
-    width: 240px;
+    width: 78px;
     background: black;
     position:fixed;
     top: 0;
     left: 0;
     padding:6px 14px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active{
+    width: 240px;
 }
 
 .sidebar .logo_content .logo{
@@ -156,6 +161,13 @@ a{
     height: 50px;
     width: 100%;
     align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.active .logo{
+    opacity: 1;
+    pointer-events: none;
 }
 
 .logo_content .logo i{
@@ -171,9 +183,9 @@ a{
 .sidebar #menu_btn{
     position: absolute;
     color:white;
-    left: 90%;
+    left: 50%;
     top: 6px;
-    font-size: 20px;
+    font-size: 30px;
     height: 50px;
     width: 50px;
     text-align: center;
@@ -181,18 +193,40 @@ a{
     transform: translateX(-50%);
 }
 
+
+.sidebar.active #menu_btn{
+    left: 90%;
+     
+}
+
 .sidebar ul{
     margin-top:20px;
 }
 
-.sidebar ul li{
+.sidebar.active ul li{
     position: relative;
     height: 50px;
     width: 100%;
     margin:0 5px;
     list-style:none;
     line-height: 50px;
+    font-size: 17px;
     
+}
+
+.sidebar ul li{
+    margin:0 13px;
+    font-size: 23px;
+}
+
+.sidebar .link_names{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.active .link_names{
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .sidebar ul li a{
@@ -202,6 +236,8 @@ a{
     text-decoration: none;
     transition: all 0.4s ease;
     border-radius: 12px;
+    white-space: nowrap;
+
 }
 
 .sidebar ul li a:hover{
@@ -239,6 +275,14 @@ a{
 .profile_content .profile .profile_details{
     display: flex;
     align-items: center;
+    opacity:0;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.sidebar.active .profile .profile_details{
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .profile .profile_details img{
@@ -264,15 +308,21 @@ a{
 
 .profile #logout{
     position: absolute;
-    left: 88%;
+    left: 60%;
     bottom: 20px;
     transform: translateX(-50%);
     min-width:50px;
     line-height:50px;
     font-size: 20px;
     border-radius: 12px;
-
+    font: size 17px;
 }
+
+.sidebar.active .profile #logout{ 
+    left: 88%;
+}
+
+
 
 
 
