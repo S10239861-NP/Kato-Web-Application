@@ -10,7 +10,7 @@
     </head>
 <body class="training_body">
     <!--SIDEBAR-->
-    <div class="sidebar">
+    <div id="sidebar" class="sidebar">
         <div class="logo_content">
             <div class="logo">
                 <i class='bx bxl-kickstarter'></i>
@@ -67,23 +67,21 @@
             </div>
         </div>
     </div>
-    <script>
-        let menu_btn = document.querySelector("#menu_btn");
-        let sidebar = document.querySelector(".sidebar");
 
-        menu_btn.onclick = function(){
-            sidebar.classList.toggle("active");
-        }
-    </script>
-    <script src="training-page.js"></script>
+    <div id="paddingContainer"></div>
+
     <!--BODY-->
     <div class="main">
          <div class="main_header">
-            <div class="search">
+            <div id="searchContainer" class="search">
                 <input type="text" placeholder="Search">
                 <button class="search_btn"><i class='bx bx-search'></i></button>
             </div>
          </div>
     </div>
+
+    <script src="/libs/utils.js"></script>
+
+    <script src="training-page.js"></script>
 </body>
 </html>

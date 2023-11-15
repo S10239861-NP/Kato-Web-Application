@@ -11,6 +11,7 @@ const sqlite = require("sqlite3");
 const jwt = require("jsonwebtoken");
 
 const cookie = require("cookie");
+
 const { error } = require("console");
 
 const jwtSecret = "0RAeW74P3LMFUSX";
