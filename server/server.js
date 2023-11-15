@@ -11,6 +11,7 @@ const sqlite = require("sqlite3");
 const jwt = require("jsonwebtoken");
 
 const cookie = require("cookie");
+const { error } = require("console");
 
 const jwtSecret = "0RAeW74P3LMFUSX";
 
@@ -41,38 +42,95 @@ function logError(error)
 
 /**
  * 
- * @param {http.ServerResponse} response 
+ * @param {http.ServerResponse} response
  */
 function returnInternalErrorResponse(response)
 {
-    response.writeHead(500, "Internal Server Error");
+    fs.readFile("./client/pages/internal-server-error-page/internal-server-error-page.html", "utf8", (error, data) =>
+    {
+        if (error != null)
+        {
+            console.error(
+                `An error occurred while attempting to read the contents of the HTML file for the Internal Server Error webpage.`
+            );
 
-    response.write(
-        "An error occurred on the server while it was processing your request. Please report this issue to the site administrator."
-    );
+            logError(error);
 
-    response.end();
+            return;
+        }
+
+        response.writeHead(500, "Internal Server Error");
+
+        response.write(
+            data
+        );
+
+        response.end();
+    });
 }
 
 /**
  * 
- * @param {http.ServerResponse} response 
+ * @param {http.ServerResponse} response
  */
 function returnNotFoundResponse(response)
 {
-    response.writeHead(404, "Not Found");
+    fs.readFile("./client/pages/404-not-found-page/404-not-found-page.html", "utf8", (error, data) =>
+    {
+        if (error != null)
+        {
+            console.error(
+                `An error occurred while attempting to read the contents of the HTML file for the 404 Not Found webpage.`
+            );
 
-    response.write(
-        "The requested resource was not found."
-    );
+            logError(error);
 
-    response.end();
+            returnInternalErrorResponse(response);
+
+            return;
+        }
+
+        response.writeHead(404, "Not Found");
+
+        response.write(data);
+
+        response.end();
+    });
+}
+
+/**
+ * 
+ * @param {http.ServerResponse} response
+ */
+function returnAccessDeniedResponse(response)
+{
+    fs.readFile("./client/pages/access-denied-page/access-denied-page.html", "utf8", (error, data) =>
+    {
+        if (error != null)
+        {
+            console.error(
+                `An error occurred while attempting to read the contents of the HTML file for the Access Denied webpage.`
+            );
+
+            logError(error);
+
+            returnInternalErrorResponse(response);
+
+            return;
+        }
+
+        response.writeHead(403, "Forbidden");
+
+        response.write(data);
+
+        response.end();
+    });
 }
 
 /**
  * Warning: Do not use this function as it might break if there are multiple cookies (with 1 or more cookies having a specified
  * expiry date and time) and return incorrect or misleading values. Use the "cookie" library instead.
- * @param {http.IncomingMessage} request 
+ * @param {http.IncomingMessage} request
  */
 function getCookies(request)
 {
@@ -106,8 +164,8 @@ function getCookies(request)
 
 /**
  * 
- * @param {http.IncomingMessage} request 
- * @param {string} cookieKey 
+ * @param {http.IncomingMessage} request
+ * @param {string} cookieKey
  * @returns {boolean}
  */
 function hasCookie(request, cookieKey)
@@ -194,11 +252,7 @@ function handleResourceRequest(request, requestURL, response)
     {
         if (resourcePathsRequiringAuth.includes(requestURL.pathname) == true && verifyAuthToken(request) == false)
         {
-            response.writeHead(403, "Forbidden");
-
-            response.write("Access denied.");
-
-            response.end();
+            returnAccessDeniedResponse(response);
 
             return;
         }
