@@ -4,15 +4,23 @@ let menu_btn = document.querySelector("#menu_btn");
 
 let sidebar = document.getElementById("sidebar");
 
-let searchContainer = document.getElementById("searchContainer");
-
-let paddingContainer = document.getElementById("paddingContainer");
+let mainContainer = document.getElementById("mainContainer");
 
 function updateSearchContainerPosition()
 {
     let sidebarComputedStyle = window.getComputedStyle(sidebar);
 
-    searchContainer.style["paddingLeft"] = Utils.getFloatFromPixelMeasurementString(
+    console.log(Utils.getFloatFromPixelMeasurementString(
+        sidebarComputedStyle["left"]
+    ));
+
+    console.log(
+        Utils.getFloatFromPixelMeasurementString(
+            sidebarComputedStyle["left"]
+        ) + Utils.getActualWidthOfElement(sidebar)
+    );
+
+    mainContainer.style["marginLeft"] = Utils.getFloatFromPixelMeasurementString(
         sidebarComputedStyle["left"]
     ) + Utils.getActualWidthOfElement(sidebar) + "px";
 }
