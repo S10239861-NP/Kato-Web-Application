@@ -46,13 +46,27 @@ function logError(error)
  */
 function returnInternalErrorResponse(response)
 {
-    response.writeHead(500, "Internal Server Error");
+    fs.readFile("./client/pages/internal-server-error-page/internal-server-error-page.html", "utf8", (error, data) =>
+    {
+        if (error != null)
+        {
+            console.error(
+                `An error occurred while attempting to read the contents of the HTML file for the Internal Server Error webpage.`
+            );
 
-    response.write(
-        "An error occurred on the server while it was processing your request. Please report this issue to the site administrator."
-    );
+            logError(error);
 
-    response.end();
+            return;
+        }
+
+        response.writeHead(500, "Internal Server Error");
+
+        response.write(
+            data
+        );
+
+        response.end();
+    });
 }
 
 /**

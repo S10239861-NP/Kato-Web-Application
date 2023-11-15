@@ -2,20 +2,52 @@
     <head>
         <title>Kato - Access Denied</title>
 
-        <link rel="stylesheet" href="/pages/access-denied-page/access-denied-page.css"/>
+        <style>
+            /* GOOGLE FONTS*/
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+            body, h1, h2, h3, h4, h5, h6, p {
+                font-family: "Poppins";
+                margin: 0px;
+                padding: 0px;
+            }
+
+            h1 {
+                font-size: 50px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            button {
+                font-family: "Poppins";
+                font-size: 14px;
+                padding: 12px 8px;
+            }
+        </style>
     </head>
 
     <body>
-        <div style="display: flex; flex-direction: column; align-content: space-evenly;">
-            <div style="display: flex; flex-direction: column; row-gap: 10px;">
-                <h1>Access Denied</h1>
+        <div style="display: flex; flex-direction: column; justify-content: space-evenly; row-gap: 40px;">
+            <div style="display: flex; flex-direction: column; margin-top: 40px; row-gap: 40px;">
+                <h1 style="display: flex; justify-content: center; align-items: center;">Access Denied</h1>
 
-                <p>You do not have sufficient permissions to access this webpage or resource.</p>
+                <p style="display: flex; justify-content: center; align-items: center;">You do not have sufficient permissions to access the requested webpage or resource.</p>
             </div>
 
-            <button id="returnToHomeButton">Return to home</button>
+            <div style="display: flex; flex-direction: row; justify-content: center;">
+                <button id="returnToHomeButton">Return to home</button>
+            </div>
         </div>
 
-        <script src="/pages/access-denied-page/access-denied-page.js"></script>
+        <script>
+            let returnToHomeButton = document.getElementById("returnToHomeButton");
+
+            returnToHomeButton.addEventListener("mousedown", (mouseEvent) =>
+            {
+                window.location.href = "/";
+            });
+        </script>
     </body>
 </html>
