@@ -69,11 +69,19 @@
     </div>
     <script>
         let menu_btn = document.querySelector("#menu_btn");
+        
         let sidebar = document.querySelector(".sidebar");
+
+        let logoutButton = document.getElementById("logout");
 
         menu_btn.onclick = function(){
             sidebar.classList.toggle("active");
-        }
+        };
+
+        logoutButton.addEventListener("mousedown", (mouseEvent) =>
+        {
+            window.location.href = "/";
+        });
     </script>
 </body>
 </html>
