@@ -2,20 +2,9 @@ let logoutButton = document.getElementById("logout");
 
 let menu_btn = document.querySelector("#menu_btn");
 
-let sidebar = document.getElementById("sidebar");
-
-let mainContainer = document.getElementById("mainContainer");
-
 let cardContainer = document.getElementById("cardContainer");
 
-function updateSearchContainerPosition()
-{
-    let sidebarComputedStyle = window.getComputedStyle(sidebar);
-
-    mainContainer.style["marginLeft"] = Utils.getFloatFromPixelMeasurementString(
-        sidebarComputedStyle["left"]
-    ) + Utils.getActualWidthOfElement(sidebar) + "px";
-}
+let mainContainer = document.getElementById("mainContainer");
 
 /*
 This implementation has been tested and works on the default window size as well as other window sizes.
@@ -46,8 +35,6 @@ function updateCardContainer()
     let requiredNegativeOffset = 18;
 
     cardContainer.style["maxHeight"] = (window.innerHeight - totalTopSpace - requiredNegativeOffset) + "px";
-
-    console.log("Updated.");
 }
 
 menu_btn.onclick = function(){
@@ -61,12 +48,8 @@ logoutButton.addEventListener("mousedown", (mouseEvent) =>
 
 addEventListener("resize", (uiEvent) =>
 {
-    updateSearchContainerPosition();
-
     updateCardContainer();
 });
-
-updateSearchContainerPosition();
 
 updateCardContainer();
 
