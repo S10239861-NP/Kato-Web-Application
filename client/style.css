@@ -149,8 +149,10 @@ a{
 
 #mainContainer{
     height: 100%;
+    /*
     max-height: 100vh;
     overflow: auto;
+    */
 }
 
 .main_header{
@@ -252,7 +254,6 @@ a{
     flex-direction: column;
     padding: 1rem 0;
     gap: 1rem;
-    overflow-y:auto ;
 }
 
 .card{
@@ -320,12 +321,10 @@ a{
     color: aqua;
 }
 
-
-
-
-
-
-
+.card-container {
+    max-height: 60vh;
+    overflow: auto;
+}
 
 /*--------------------------------------DASHBOARD-----------------------------------------------*/
 .dashboard_pg{
