@@ -10,7 +10,7 @@
     </head>
 <body class="about_body">
     <!--SIDEBAR-->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="logo_content">
             <div class="logo">
                 <i class='bx bxl-kickstarter'></i>
@@ -19,13 +19,6 @@
             <i class='bx bx-menu'id="menu_btn" ></i>
         </div>
         <ul class="nav_list">
-           <li>
-            <a href="home.html">
-                <i class='bx bxs-home' ></i>
-                <span class="link_names">Home</span>
-            </a>
-           </li>
-
            <li>
             <a href="dashboard.html">
                 <i class='bx bxs-dashboard' ></i>
@@ -67,6 +60,25 @@
             </div>
         </div>
     </div>
+    <div id="mainContainer"> 
+        <div class="cotainer_content">
+            <div class="profileCard">
+                <div class="profileCardContent">
+                    <div class="profileImage">
+                        <img src="images/rando1.jpg" alt="">
+                    </div>
+                    <div class="profileDetails">
+                        <span class="profileName">Name</span>
+                        <span class="profileCareer">Web Developer</span>
+                    </div>
+                    <div class="profileButton">
+                        <button class="View">View more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
     <script>
         let menu_btn = document.querySelector("#menu_btn");
         let sidebar = document.querySelector(".sidebar");
@@ -75,5 +87,8 @@
             sidebar.classList.toggle("active");
         }
     </script>
+    <script src="/libs/utils.js"></script>
+    <script src="/libs/main-container-behaviour.js"></script>
+
 </body>
 </html>
