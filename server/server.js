@@ -410,6 +410,37 @@ function onRequestReceived(request, response)
 
             return;
         }
+        else if (requestURL.pathname == "/get-trainings")
+        {
+            katoDB.all("SELECT * FROM Training;", [], (error, rows) =>
+            {
+                if (error != null)
+                {
+                    logError(error);
+
+                    return;
+                }
+
+                let trainings = [];
+
+                for (const row of rows)
+                {
+                    trainings.push(
+                        {
+                            courseName: row.CourseName,
+                            categoryName: row.CategoryName,
+                            duration: row.Duration
+                        }
+                    );
+                }
+
+                response.writeHead(200, "Success");
+
+                response.write(JSON.stringify(trainings));
+
+                response.end();
+            });
+        }
     }
 
     returnNotFoundResponse(response);
@@ -417,48 +448,6 @@ function onRequestReceived(request, response)
 
 function start()
 {
-    katoDB.serialize(() =>
-    {
-        if (setupKatoDB == true)
-        {
-            katoDB.run(
-                `CREATE TABLE Employees (
-                    StaffID TEXT PRIMARY KEY,
-                    Password TEXT,
-                    FirstName TEXT,
-                    LastName TEXT
-                );`
-            );
-    
-            katoDB.run(
-                `INSERT INTO Employees VALUES (
-                    'S001',
-                    'abc',
-                    'John',
-                    'Doe'
-                );`
-            );
-        
-            katoDB.run(
-                `INSERT INTO Employees VALUES (
-                    'S002',
-                    'def',
-                    'Jane',
-                    'Doe'
-                );`
-            );
-        
-            katoDB.run(
-                `INSERT INTO Employees VALUES (
-                    'S003',
-                    'ghi',
-                    'Mary',
-                    'Poppins'
-                );`
-            );
-        }
-    });
-
     server.listen(
         serverPort,
         serverHostName,
