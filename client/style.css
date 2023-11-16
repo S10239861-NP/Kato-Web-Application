@@ -241,6 +241,7 @@ a{
     border: none;
     margin-top: 0 0 0.5rem;
     box-shadow: rgba(0,0,0,0.16) 0px 1px 4px;
+    margin-right:10px;
 }
 
 .wrapper{
@@ -358,6 +359,7 @@ a{
     left: 0;
     padding:6px 14px;
     transition: all 0.5s ease;
+    z-index: 1;
 }
 
 .sidebar.active{
@@ -529,6 +531,19 @@ a{
 
 .sidebar.active .profile #logout{ 
     left: 88%;
+}
+
+.detail_header img{
+    width: 50px;
+    height: 50px;
+}
+
+.divider{
+    width: 100%;
+    height: 1px;
+    background-color:whitesmoke ;
+    border: none;
+    margin:1rem 0;
 }
 
 
