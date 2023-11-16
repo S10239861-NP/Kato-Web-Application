@@ -429,7 +429,8 @@ function onRequestReceived(request, response)
                         {
                             courseName: row.CourseName,
                             categoryName: row.CategoryName,
-                            duration: row.Duration
+                            duration: row.Duration,
+                            description: row.Description
                         }
                     );
                 }
@@ -440,6 +441,8 @@ function onRequestReceived(request, response)
 
                 response.end();
             });
+
+            return;
         }
     }
 
