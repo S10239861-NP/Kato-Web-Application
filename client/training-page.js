@@ -6,6 +6,12 @@ let cardContainer = document.getElementById("cardContainer");
 
 let mainContainer = document.getElementById("mainContainer");
 
+let trainingDetailsContainer = document.getElementById("trainingDetailsContainer");
+
+let closeTrainingDetailsButton = document.getElementById("closeTrainingDetailsButton");
+
+let sidebar = document.getElementById("sidebar");
+
 /*
 This implementation has been tested and works on the default window size as well as other window sizes.
 */
@@ -53,4 +59,19 @@ addEventListener("resize", (uiEvent) =>
 
 updateCardContainer();
 
+closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
+{
+    trainingDetailsContainer.classList.remove("active");
 
+    sidebar.classList.remove("fully-hidden");
+});
+
+for (const wrapperContainer of cardContainer.children)
+{
+    wrapperContainer.addEventListener("mousedown", () =>
+    {
+        trainingDetailsContainer.classList.add("active");
+
+        sidebar.classList.add("fully-hidden");
+    });
+}
