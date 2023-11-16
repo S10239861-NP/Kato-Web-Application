@@ -149,8 +149,10 @@ a{
 #mainContainer{
     background-color:whitesmoke;
     height: 100%;
+    /*
     max-height: 100vh;
     overflow: auto;
+    */
 }
 
 .main_header{
@@ -251,7 +253,6 @@ a{
     flex-direction: column;
     padding: 1rem 0;
     gap: 1rem;
-    overflow-y:auto ;
 }
 
 .card{
@@ -534,14 +535,11 @@ a{
     left: 88%;
 }
 
-/*
 .card-container {
     display: flex;
     flex-direction: column;
-    max-height: 100%;
     overflow: auto;
 }
-*/
 
 /*
 body {
