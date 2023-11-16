@@ -321,12 +321,10 @@ a{
     color: aqua;
 }
 
-
-
-
-
-
-
+.card-container {
+    max-height: 60vh;
+    overflow: auto;
+}
 
 /*--------------------------------------DASHBOARD-----------------------------------------------*/
 .dashboard_pg{

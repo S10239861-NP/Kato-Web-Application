@@ -17,7 +17,10 @@ function updateSearchContainerPosition()
     ) + Utils.getActualWidthOfElement(sidebar) + "px";
 }
 
-function initCardContainer()
+/*
+This implementation has been tested and works on the default window size as well as other window sizes.
+*/
+function updateCardContainer()
 {
     let totalTopSpace = 0;
 
@@ -31,7 +34,20 @@ function initCardContainer()
         totalTopSpace += Utils.getActualHeightOfElement(mainContainerChildElement);
     }
 
-    cardContainer.style["maxHeight"] = (window.innerHeight - totalTopSpace) + "px";
+    /*
+    Do not remove or change this variable.
+    
+    This variable is required to be subtracted from the window's inner height so as to obtain the actual inner height of the
+    window (or rather the webpage in this case).
+
+    This variable is required for this implementation to work correctly (not just on the default size, but also on other sizes so as
+    to allow the webpage to be responsive).
+    */
+    let requiredNegativeOffset = 18;
+
+    cardContainer.style["maxHeight"] = (window.innerHeight - totalTopSpace - requiredNegativeOffset) + "px";
+
+    console.log("Updated.");
 }
 
 menu_btn.onclick = function(){
@@ -43,13 +59,15 @@ logoutButton.addEventListener("mousedown", (mouseEvent) =>
     window.location.href = "/";
 });
 
-document.addEventListener("resize", (uiEvent) =>
+addEventListener("resize", (uiEvent) =>
 {
     updateSearchContainerPosition();
+
+    updateCardContainer();
 });
 
 updateSearchContainerPosition();
 
-initCardContainer();
+updateCardContainer();
 
 
