@@ -344,7 +344,7 @@ function onRequestReceived(request, response)
                 let requestBodyObj = JSON.parse(requestBody);
 
                 katoDB.all(
-                    `SELECT * FROM Employees WHERE StaffID = ? AND Password = ?;`,
+                    `SELECT * FROM Employee WHERE StaffID = ? AND Password = ?;`,
                     [requestBodyObj.staffID, requestBodyObj.password],
                     (error, rows) =>
                     {
