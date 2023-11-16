@@ -41,4 +41,13 @@ document.addEventListener("resize", (uiEvent) =>
 
 updateSearchContainerPosition();
 
+/*details section of a card*/
+document.getElementsByClassName("card")[0].addEventListener("click",function(){
+    document.getElementsByClassName("details")[0].classList.add("active");
+})
+
+document.getElementsByClassName("close-details")[0].addEventListener("click",function(){
+    document.getElementsByClassName("details")[0].classList.remove("active")
+})
+
 
