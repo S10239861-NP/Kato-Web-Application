@@ -18,6 +18,8 @@ let trainingDetailsContainerCategoryNameLabel = document.getElementById("trainin
 
 let trainingDetailsContainerDescriptionLabel = document.getElementById("trainingDetailsContainerDescriptionLabel");
 
+let categoryFilterContainer = document.getElementById("categoryFilterContainer");
+
 /*
 This implementation has been tested and works on the default window size as well as other window sizes.
 */
@@ -72,6 +74,8 @@ function updateDisplayedTrainings()
     {
         if (getTrainingsRequest.readyState == XMLHttpRequest.DONE && getTrainingsRequest.status == 200)
         {
+            let uniqueCategoryNames = [];
+
             let trainings = JSON.parse(getTrainingsRequest.responseText);
 
             for (const training of trainings)
@@ -91,6 +95,19 @@ function updateDisplayedTrainings()
                 cardContainer.appendChild(
                     trainingCard
                 );
+
+                if (uniqueCategoryNames.includes(training.categoryName) == false)
+                {
+                    let newCategoryFilterButton = document.createElement("button");
+
+                    newCategoryFilterButton.classList.add("filter_btn");
+
+                    newCategoryFilterButton.innerText = training.categoryName;
+
+                    categoryFilterContainer.appendChild(newCategoryFilterButton);
+
+                    uniqueCategoryNames.push(training.categoryName);
+                }
             }
         }
     };
