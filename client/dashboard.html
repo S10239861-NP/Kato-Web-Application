@@ -10,7 +10,7 @@
 </head>
 <body class="dashboard_body">
     <!--SIDEBAR-->
-    <div class="sidebar">
+    <div id="sidebar" class="sidebar">
         <div class="logo_content">
             <div class="logo">
                 <i class='bx bxl-kickstarter'></i>
@@ -67,6 +67,11 @@
             </div>
         </div>
     </div>
+
+    <div id="mainContainer">
+
+    </div>
+
     <script>
         let menu_btn = document.querySelector("#menu_btn");
         
@@ -83,5 +88,9 @@
             window.location.href = "/";
         });
     </script>
+
+    <script src="/libs/utils.js"></script>
+
+    <script src="/libs/main-container-behaviour.js"></script>
 </body>
 </html>
