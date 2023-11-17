@@ -12,6 +12,14 @@ let closeTrainingDetailsButton = document.getElementById("closeTrainingDetailsBu
 
 let sidebar = document.getElementById("sidebar");
 
+let trainingDetailsContainerCourseNameLabel = document.getElementById("trainingDetailsContainerCourseNameLabel");
+
+let trainingDetailsContainerCategoryNameLabel = document.getElementById("trainingDetailsContainerCategoryNameLabel");
+
+let trainingDetailsContainerDescriptionLabel = document.getElementById("trainingDetailsContainerDescriptionLabel");
+
+let categoryFilterContainer = document.getElementById("categoryFilterContainer");
+
 /*
 This implementation has been tested and works on the default window size as well as other window sizes.
 */
@@ -43,6 +51,75 @@ function updateCardContainer()
     cardContainer.style["maxHeight"] = (window.innerHeight - totalTopSpace - requiredNegativeOffset) + "px";
 }
 
+function onTrainingCardMouseDown()
+{
+    trainingDetailsContainerCourseNameLabel.innerText = this.getAttribute("course-name");
+
+    trainingDetailsContainerCategoryNameLabel.innerText = this.getAttribute("category-name");
+
+    trainingDetailsContainerDescriptionLabel.innerText = this.getAttribute("description");
+
+    trainingDetailsContainer.classList.add("active");
+
+    sidebar.classList.add("fully-hidden");
+}
+
+function updateDisplayedTrainings()
+{
+    let getTrainingsRequest = new XMLHttpRequest();
+
+    getTrainingsRequest.open("POST", "/get-trainings", true);
+
+    getTrainingsRequest.onload = (progressEvent) =>
+    {
+        if (getTrainingsRequest.readyState == XMLHttpRequest.DONE && getTrainingsRequest.status == 200)
+        {
+            let uniqueCategoryNames = [];
+
+            let trainings = JSON.parse(getTrainingsRequest.responseText);
+
+            for (const training of trainings)
+            {
+                let trainingCard = document.createElement("training-card");
+
+                trainingCard.setAttribute("course-name", training.courseName);
+
+                trainingCard.setAttribute("category-name", training.categoryName);
+
+                trainingCard.setAttribute("duration", training.duration);
+
+                trainingCard.setAttribute("description", training.description);
+
+                trainingCard.addEventListener("mousedown", onTrainingCardMouseDown.bind(trainingCard));
+
+                cardContainer.appendChild(
+                    trainingCard
+                );
+
+                if (uniqueCategoryNames.includes(training.categoryName) == false)
+                {
+                    let newCategoryFilterButton = document.createElement("button");
+
+                    newCategoryFilterButton.classList.add("filter_btn");
+
+                    newCategoryFilterButton.innerText = training.categoryName;
+
+                    categoryFilterContainer.appendChild(newCategoryFilterButton);
+
+                    uniqueCategoryNames.push(training.categoryName);
+                }
+            }
+        }
+    };
+
+    getTrainingsRequest.onerror = (progressEvent) =>
+    {
+        console.error(getTrainingsRequest.statusText);
+    };
+
+    getTrainingsRequest.send();
+}
+
 menu_btn.onclick = function(){
     sidebar.classList.toggle("active");
 };
@@ -59,19 +136,11 @@ addEventListener("resize", (uiEvent) =>
 
 updateCardContainer();
 
+updateDisplayedTrainings();
+
 closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
 {
     trainingDetailsContainer.classList.remove("active");
 
     sidebar.classList.remove("fully-hidden");
 });
-
-for (const wrapperContainer of cardContainer.children)
-{
-    wrapperContainer.addEventListener("mousedown", () =>
-    {
-        trainingDetailsContainer.classList.add("active");
-
-        sidebar.classList.add("fully-hidden");
-    });
-}

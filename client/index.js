@@ -14,7 +14,7 @@ loginButton.addEventListener("mousedown", () =>
     {
         if (request.readyState == XMLHttpRequest.DONE && request.status == 200 && request.responseText != "Incorrect credentials.")
         {
-            window.location.href = "home.html";
+            window.location.href = "dashboard.html";
         }
     };
 
