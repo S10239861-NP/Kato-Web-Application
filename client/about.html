@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>About us</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="swiper-bundle.min.css">
         <!--Boxicon link-->
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <meta name="viewport"content="width=device-width, initial-scale=1.0">
@@ -60,23 +61,27 @@
             </div>
         </div>
     </div>
-    <div id="mainContainer"> 
-        <div class="cotainer_content">
-            <div class="profileCard">
-                <div class="profileCardContent">
-                    <div class="profileImage">
-                        <img src="images/rando1.jpg" alt="">
+    <div class="slide-container swiper" id="mainContainer">  
+        <div class="slide_content">
+            <div class="slideCardWrapper swiper-wrapper">
+                <div class="slideCard swiper-slide">
+                    <div class="slideCardImageContent">
+                        <span class="overlay"></span>
+                        <div class="slideCardImage">
+                            <img src="images/rando1.jpg" alt="" class="slideCard-img">
+                        </div>
                     </div>
-                    <div class="profileDetails">
-                        <span class="profileName">Name</span>
-                        <span class="profileCareer">Web Developer</span>
-                    </div>
-                    <div class="profileButton">
-                        <button class="View">View more</button>
+                    <div class="slideCardContent">
+                        <h2 class="staffName">David Dell</h2>
+                        <p class="staffRole">Web developer</p>
+                        <button class="slideCardBtn">View more</button>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
         
     </div>
     <script>
@@ -89,6 +94,26 @@
     </script>
     <script src="/libs/utils.js"></script>
     <script src="/libs/main-container-behaviour.js"></script>
+    <script src="libs/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".slide-content",{
+            slidesPerView:3,
+            spaceBetween:30,
+            slidesPerGroup:3,
+            loop:true,
+            loopFillGroupWithBlank:true,
+            pagination:{
+                el:".swiper-pagination",
+                clickable:true,
+            },
+            navigation:{
+                nextEL:".swiper-button-next",
+                prevEl:".swiper-button-prev",
+            },
+        });
+
+    </script>
+   
 
 </body>
 </html>
