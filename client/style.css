@@ -974,6 +974,18 @@ td:first-child{
     transition:all 0.4s ease; 
 }
 
+.footer{
+    position:sticky;
+    bottom: 0; right: 0; left: 0;
+    background-color: white;
+    color: black;
+    border-top: var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    z-index: 500;
+}
 
 
 
