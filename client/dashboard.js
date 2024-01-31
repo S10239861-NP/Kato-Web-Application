@@ -17,8 +17,12 @@ function drawChartForTrainingRemainingOverTime()
     );
 
     let options = {
-        title: "Training left",
         is3D: true,
+        width: "100%",
+        height: "100%",
+        legend: {
+            position: "bottom"
+        },
     };
 
     let chart = new google.visualization.PieChart(
@@ -41,9 +45,12 @@ function drawChartForTasksRemainingOverTime()
     );
     
     let options = {
-        title: "Tasks over time",
         curveType: "function",
-        legend: { position: "bottom" },
+        legend: {
+            position: "bottom" 
+        },
+        width: "100%",
+        height: "100%",
     };
     
     let chart = new google.visualization.LineChart(
