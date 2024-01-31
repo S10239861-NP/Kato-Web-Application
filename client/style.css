@@ -926,18 +926,51 @@ td:first-child{
     
 }
 
-/*module table*/
-.moduleTable{
-    display: grid;
-    grid-template-columns:auto auto auto;
-    width: 850px;
-    background-color: #fff;
-    column-gap: 10px;
-    margin-left: 1100px;
-    height:700px;
-    top: 800px;
-
+/*courses*/
+.Courses{
+    margin-left: 140px;
+    margin-top: 50px;
 }
+
+.Courses .course-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.Courses .course-container .course-box{
+    border-radius: .5rem;
+    background-color: white;
+    padding: 2rem;
+}
+
+.Courses .course-container .course-box .course-img{
+    width: 100%;
+    border-radius: .5rem;
+    height: 20rem;
+    object-fit: cover;
+}
+
+.course-desc{
+    font-size: 2rem;
+    color: black;
+    margin-top: .5rem;
+    padding: .5rem 0;
+}
+
+.course-btn{
+    border-radius: .5rem;
+    background: black;
+    color: cyan;
+    padding: 1rem;
+    
+}
+
+
+
+
 
 
 
