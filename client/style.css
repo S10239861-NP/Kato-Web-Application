@@ -345,12 +345,11 @@ a{
     font-weight: 600;
     margin-bottom: 10px;
     color: black;
-    margin-left: 50px;;
 }
 
 .dashboard_main {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .insights{
@@ -358,6 +357,7 @@ a{
     grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
     grid-gap: 24px;
     margin-top: 10px;
+    padding-left: 0px;
 }
 
 .insights li{
@@ -909,28 +909,26 @@ td:first-child{
 
 /*charts*/
 .charts{
-    width: 900px;
-    height:350px;
     background-color: #fff;
-    margin-bottom: 16px;
-    padding: 14px 10px;
     border-radius: 20px;
+    width: 50%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-left: 40px;
-    flex-wrap: wrap;
-    grid-gap: 24px;
-    margin-top: 24px;
-    width:50%;
-    
+    justify-content: center;
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
 /*courses*/
+/*
 .Courses{
-    margin-left: 140px;
-    margin-top: 50px;
+
 }
+*/
 
 .Courses .course-container{
     display: grid;
