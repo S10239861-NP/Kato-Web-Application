@@ -954,7 +954,7 @@ td:first-child{
 }
 
 .course-desc{
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: black;
     margin-top: .5rem;
     padding: .5rem 0;
@@ -974,11 +974,40 @@ td:first-child{
     transition:all 0.4s ease; 
 }
 
+/*video*/
+.vid-details{
+    background-color: var(--white);
+    padding: 2rem;
+}
+
+.vid-details .video{
+    width: 100%;
+    border-radius: .5rem;
+}
+
+.elearning-title{
+    font-size: 2rem;
+    color: black;
+    padding: 1.25rem 0;
+    display: flex;
+}
+
+.vid-desc{
+    padding-top: 2rem;
+}
+
+.vid-desc p{
+    line-height: 2;
+    font-size: 1.1rem;
+    color: rgb(114, 114, 114);
+}
+
+/*footer*/
 .footer{
     position:sticky;
     bottom: 0; right: 0; left: 0;
-    background-color: white;
-    color: black;
+    background-color: rgb(82, 82, 82);
+    color:white;
     border-top: var(--border);
     padding: 2rem 1.5rem;
     text-align: center;
