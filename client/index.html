@@ -1,66 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-       <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, input-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, input-scale=1.0" />
 
-       <!--REMXICONS-->
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <!--REMXICONS-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css"
+    />
 
-       <!--STYLESHEET/CSS-->
-        <link rel="stylesheet" href="style.css"/>
+    <!--STYLESHEET/CSS-->
+    <link rel="stylesheet" href="style.css" />
 
-        <title>Login form</title>
-    </head>
+    <title>Login form</title>
+  </head>
 
-    <body class="login_body">
-       <div class="login">
-        <img src="\images\login_bg.jpg" alt="image" class="login_bg">
-        <form action="" class="login_form">
-            <h1 class="login_title">Login</h1>
-            <div class="login_inputs">
+  <body class="login_body">
+    <div class="login">
+      <img src="\images\login_bg.jpg" alt="image" class="login_bg" />
+      <form action="" class="login_form">
+        <h1 class="login_title">Login</h1>
+        <div class="login_inputs">
+          <!--input STAFF ID-->
+          <div class="login_box">
+            <input
+              id="staffIDInput"
+              type="text"
+              placeholder="Staff ID"
+              required
+              class="login_input"
+            />
+            <i class="ri-mail-fill"></i>
+          </div>
 
-                <!--input STAFF ID-->
-                <div class="login_box">
-                    <input id="staffIDInput" type="text" placeholder="Staff ID" required class="login_input">
-                    <i class="ri-mail-fill"></i>
-
-                </div>
-
-                <!--input Password-->
-                <div class="login_box">
-                    <input id="passwordInput" type="password" placeholder="Password" required class="login_input">
-                    <i class="ri-lock-fill"></i>
-                </div>
-            </div>
-           <button id="loginButton" type="button" class="login_button">Login</button>
-           <div class="login_passchange">
-            Forgot your password? <a href="#" >Change password</a>
-           </div>
-
-        </form>
-       </div>
-       <!-- Naveed's original form code
-       <div class="main-content-container">
-        <h1>Kato</h1>
-
-        <div class="input-fields-container">
-            <label>Staff ID:</label>
-
-            <input id="staffIDInput" class="login-input-box" type="text"/>
-
-            <label>Password:</label>
-
-            <input id="passwordInput" class="login-input-box" type="password"/>
-
-            <label>Show Password</label>
-
-            <input id="showPasswordCheckbox" class="show-password-checkbox" type="checkbox"/>
+          <!--input Password-->
+          <div class="login_box">
+            <input
+              id="passwordInput"
+              type="password"
+              placeholder="Password"
+              required
+              class="login_input"
+            />
+            <i class="ri-lock-fill"></i>
+          </div>
         </div>
-
-        <button class="login-button">Login</button>
+        <button id="loginButton" type="button" class="login_button">
+          Login
+        </button>
+        <div class="login_passchange">
+          Forgot your password? <a href="#">Change password</a>
+        </div>
+      </form>
     </div>
--->
-        <script src="index.js"></script>
-    </body>
+    <script src="index.js"></script>
+  </body>
 </html>

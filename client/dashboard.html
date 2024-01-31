@@ -1,319 +1,128 @@
 <!DOCTYPE html>
 <html lang="en" class="dashboard_pg">
-<head>
-    <meta charset="UTF-8">
-        <title>Dashboard</title>
-        <link rel="stylesheet" href="style.css">
-        <!--Boxicon link-->
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <meta name="viewport"content="width=device-width, initial-scale=1.0">
-</head>
-<body class="dashboard_body">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <!--Boxicon link-->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body class="dashboard_body">
     <!--SIDEBAR-->
     <div class="sidebar" id="sidebar">
-        <div class="logo_content">
-            <div class="logo">
-                <i class='bx bxl-kickstarter'></i>
-                <div class="logo_name">Kato</div>
-            </div>
-            <i class='bx bx-menu'id="menu_btn" ></i>
+      <div class="logo_content">
+        <div class="logo">
+          <i class="bx bxl-kickstarter"></i>
+          <div class="logo_name">Kato</div>
         </div>
-        <ul class="nav_list">
-           <li>
-            <a href="dashboard.html">
-                <i class='bx bxs-dashboard' ></i>
-                <span class="link_names">Dashboard</span>
-            </a>
-           </li>
+        <i class="bx bx-menu" id="menu_btn"></i>
+      </div>
+      <ul class="nav_list">
+        <li>
+          <a href="dashboard.html">
+            <i class="bx bxs-dashboard"></i>
+            <span class="link_names">Dashboard</span>
+          </a>
+        </li>
 
-           <li>
-            <a href="Training.html">
-                <i class='bx bx-briefcase-alt'></i>
-                <span class="link_names">Training</span>
-            </a>
-           </li>
+        <li>
+          <a href="Training.html">
+            <i class="bx bx-briefcase-alt"></i>
+            <span class="link_names">Training</span>
+          </a>
+        </li>
 
-           <li>
-            <a href="about.html">
-                <i class='bx bxs-group' ></i>
-                <span class="link_names">Know your team</span>
-            </a>
-           </li>
-           <!---
-
-           <li>
-            <a href="profile.html">
-                <i class='bx bx-user-circle' ></i>
-                <span class="link_names">Profile</span>
-            </a>
-           </li>
-        -->
-        </ul>
-        <div class="profile_content">
-            <div class="profile">
-                <div class="profile_details">
-                    <img src="\images\profile.jpg" alt="">
-                    <div class="name_job">
-                        <div class="name">lulu</div>
-                        <div class="job">Web Designer</div>
-                    </div>
-                </div>
-                <i class='bx bx-log-out' id="logout" ></i>
+        <li>
+          <a href="about.html">
+            <i class="bx bxs-group"></i>
+            <span class="link_names">Know your team</span>
+          </a>
+        </li>
+        <!---
+            <li>
+                <a href="profile.html">
+                    <i class='bx bx-user-circle' ></i>
+                    <span class="link_names">Profile</span>
+                </a>
+            </li>
+            -->
+      </ul>
+      <div class="profile_content">
+        <div class="profile">
+          <div class="profile_details">
+            <img src="\images\profile.jpg" alt="" />
+            <div class="name_job">
+              <div class="name">lulu</div>
+              <div class="job">Web Designer</div>
             </div>
+          </div>
+          <i class="bx bx-log-out" id="logout"></i>
         </div>
+      </div>
     </div>
 
     <!--DASHBOARD-->
     <div id="mainContainer">
-        <div class="dashboard_main">
-            <div class="dashboard_header">
-                <h1>Kato</h1>            
-            </div>
-            <ul class="insights">
-                <li><i class='bx bxs-calendar' ></i>
-                    <span class="insight_info">
-                        <h3>4</h3>
-                        <p>Days to arrival</p>
-                    </span>
-                </li>
-                <li><i class='bx bxs-graduation' ></i>
-                    <span class="insight_info">
-                        <h3>6</h3>
-                        <p>Lessons</p>
-                    </span>
-                </li>
+      <div class="dashboard_main">
+        <div class="dashboard_header">
+          <h1>Kato</h1>
+        </div>
+        <ul class="insights">
+          <li>
+            <i class="bx bxs-calendar"></i>
+            <span class="insight_info">
+              <h3>4</h3>
+              <p>Days to arrival</p>
+            </span>
+          </li>
+          <li>
+            <i class="bx bxs-graduation"></i>
+            <span class="insight_info">
+              <h3>6</h3>
+              <p>Lessons</p>
+            </span>
+          </li>
 
-                <li><i class='bx bxs-message-rounded' ></i>
-                    <span class="insight_info">
-                        <h3>10</h3>
-                        <p>Messages</p>
-                    </span>
-                </li>
-            </ul>
+          <li>
+            <i class="bx bxs-message-rounded"></i>
+            <span class="insight_info">
+              <h3>10</h3>
+              <p>Messages</p>
+            </span>
+          </li>
+        </ul>
 
-            <div class="bottom_data">
-                
-            </div>
+        <div class="bottom_data"></div>
+        
+        <div class="charts-container">
             <!--Chart for tasks remaining over time-->
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
+            <div id="curve_chart" class="charts"></div>
 
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                ['Date', 'Incomplete', 'Complete'],
-                ['29Jan',  10,      4],
-                ['30Jan',  11,      4],
-                ['31Jan',  6,       9],
-                ['1Feb',  3,      12]
-                ]);
-
-                var options = {
-                title: 'Tasks over time',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-                };
-
-                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-                chart.draw(data, options);
-            }
-            </script>
-            <div id="curve_chart" class="charts" ></div>
-
-            <!--chart for training remaining over time-->
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-            google.charts.load("current", {packages:["corechart"]});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                ['Training', 'left'],
-                ['A',     1],
-                ['B',      4],
-                ['C',  2],
-                ['D', 3],
-                
-                ]);
-
-                var options = {
-                title: 'Training left',
-                is3D: true,
-                };
-
-                var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-                chart.draw(data, options);
-            }
-            </script>
+            <!--Chart for training remaining over time-->
             <div id="piechart_3d" class="charts"></div>
-
-                </div>
-            </div>
         </div>
-
-        <!--Modules-->
-
-        
+      </div>
     </div>
 
-        
+    <!--Modules should be placed here.-->
 
-
-    
-
-
-
-    <!---
-    <div id="mainContainer">
-        <div class="dashboard_main">
-            <div class="dashboard_header">
-                <h1>Dashboard</h1>            
-            </div>
-            <ul class="insights">
-                <li><i class='bx bxs-calendar' ></i>
-                    <span class="insight_info">
-                        <h3>4</h3>
-                        <p>Days to arrival</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-graduation' ></i>
-                    <span class="insight_info">
-                        <h3>6</h3>
-                        <p>Lessons</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-message-rounded' ></i>
-                    <span class="insight_info">
-                        <h3>10</h3>
-                        <p>Messages</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-check-square' ></i>
-                    <span class="insight_info">
-                        <h3>4</h3>
-                        <p>tasks</p>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        <div class="bottom_data">
-            <div class="messages">
-                <div class="message_header">
-                    <i class='bx bxs-chat'></i>
-                    <h3>Recent Messages</h3>
-                    <i class='bx bx-filter' ></i>
-                    <i class='bx bx-search' ></i>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            --
-            <div class="reminder_list">
-                <div class="reminder_header">
-                    <i class='bx bx-notepad' id="reminder_notepad" ></i>
-                    <h3>Reminders</h3>
-                    <i class='bx bx-filter' id="reminder_filter"></i>
-                    <i class='bx bx-plus' id="reminder_plus" ></i>
-                </div>
-                <ul class="task_list">
-                   
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-
-                    
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-
-                    
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </div>
--->
-
-    <discord-chatbot-button style="position: fixed; right: 10px; bottom: 10px;"></discord-chatbot-button>
-
-    <script>
-        let menu_btn = document.querySelector("#menu_btn");
-        
-        let sidebar = document.querySelector(".sidebar");
-
-        let logoutButton = document.getElementById("logout");
-
-        menu_btn.onclick = function(){
-            sidebar.classList.toggle("active");
-        };
-
-        logoutButton.addEventListener("mousedown", (mouseEvent) =>
-        {
-            window.location.href = "/";
-        });
-    </script>
+    <discord-chatbot-button
+      style="position: fixed; right: 10px; bottom: 10px"
+    ></discord-chatbot-button>
 
     <script src="/libs/utils.js"></script>
 
     <script src="/libs/main-container-behaviour.js"></script>
-    
+
     <script src="/libs/components.js"></script>
-</body>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="dashboard.js"></script>
+  </body>
 </html>
