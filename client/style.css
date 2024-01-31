@@ -908,14 +908,13 @@ td:first-child{
 }
 
 /*charts*/
-/* .charts{
-    border-radius: 20px;
-    width: fit-content;
+.charts{
     display: flex;
+    width: 100%;
+    height: 100%;
     align-items: center;
     justify-content: center;
-    height: 300px;
-} */
+}
 
 .charts-container {
     display: flex;

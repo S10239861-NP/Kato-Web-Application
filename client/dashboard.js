@@ -25,8 +25,10 @@ function drawChartForTrainingRemainingOverTime()
         },
     };
 
+    let chartElement = document.getElementById("piechart_3d");
+
     let chart = new google.visualization.PieChart(
-        document.getElementById("piechart_3d")
+        chartElement
     );
     
     chart.draw(data, options);
@@ -52,12 +54,56 @@ function drawChartForTasksRemainingOverTime()
         width: "100%",
         height: "100%",
     };
+
+    let chartElement = document.getElementById("curve_chart");
     
     let chart = new google.visualization.LineChart(
-        document.getElementById("curve_chart")
+        chartElement
     );
     
     chart.draw(data, options);
+}
+
+/**
+ * Warning: Do not use this function, it does not work as intended.
+ * @param {HTMLDivElement} chartElement 
+ */
+function makeChartResponsive(chartElement)
+{
+    let chartParentElement = chartElement.parentElement;
+
+    window.addEventListener("resize", (uiEvent) =>
+    {
+        let chartParentElementComputedStyle = getComputedStyle(chartParentElement);
+
+        let availableWidth = Utils.getActualWidthOfElement(
+            chartParentElement
+        );
+
+        let availableHeight = Utils.getActualHeightOfElement(
+            chartParentElement
+        );
+
+        for (const chartSiblingElement of chartParentElement.children)
+        {
+            if (chartSiblingElement.isEqualNode(chartSiblingElement) == true)
+            {
+                continue;
+            }
+            
+            availableWidth -= Utils.getActualWidthOfElement(
+                chartSiblingElement
+            );
+    
+            availableHeight -= Utils.getActualHeightOfElement(
+                chartSiblingElement
+            );
+        }
+
+        chartElement.style.width = `${availableWidth}px`;
+
+        chartElement.style.height = `${availableHeight}px`;
+    });
 }
 
 menuBtn.onclick = function () {
