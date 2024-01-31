@@ -968,6 +968,12 @@ td:first-child{
     
 }
 
+.course-btn:hover{
+    color: black;
+    background: cyan;
+    transition:all 0.4s ease; 
+}
+
 
 
 
