@@ -113,4 +113,32 @@ cb:1:3
 
 This happened when I was attempting to chat through the embedded widget on the landing page of WidgetBot's official website.
 
+## Development issues
+Duplication of code throughout certain parts of the codebase (which violates the DRY (Do not Repeat Yourself) principle) has resulted in the occurrence of unexpected bugs in the Kato web application.
+
+The absence of a bundler (such as Webpack or Vite) has led to issues such as global namespace pollution, an increased chance of syntax errors due to lack of type hinting, and having to be particular about the order in which scripts are included into a HTML file (or else unanticipated bugs or other issues may arise).
+
+### Proposal to address these development issues
+These issues can be fixed by taking the following measures:
+- Follow the DRY (Do not Repeat Yourself) principle, this means that one should avoid or at least minimize code duplication, as a result, this means that there should be no copying and pasting of identical pieces of code in different files unless there is absolutely no choice whatsoever.
+- Use a bundler such as Vite.
+
+Making use of a framework such as React can help minimize code duplication, however, 1 disadvantage of this measure is that there is a learning curve when it comes to learning how to use React which might reduce development efficiency especially in projects with a shorter timeline.
+
+Advantages of using React:
+- Minimizes/eliminates code duplication.
+- Using React components, UI elements can be easily reused in different pages of a website, in different parts of a page, and even in other projects.
+- Using React components, new UI elements can be created and extended easily.
+
+Disadvantages of using React:
+- The learning curve for React can be smooth or steep, this depends on the developer.
+- Build tools (mainly a bundler) will have to be set up first.
+
+An alternative to using React would be to instead use the native browser's custom HTML elements API. There are certain limitations to using this API (such as the fact that custom elements can sometimes take a while to render, resulting in issues like blatantly visible flickering).
+
+## List of issues found in latest analysis of codebase
+- HTML code for the sidebar is duplicated (there are separate copies of this code for each page), convert the sidebar into a component instead so that it can be used in different pages easily. This way, changes made to the sidebar will also be automatically applied to all the pages with the sidebar.
+- Sidebar and main container rely on hardcoded values to render at the correct positions, refactor HTML code for the sidebar and main container to allow them to still be rendered at their intended positions while allowing for dynamic positioning.
+
+
 

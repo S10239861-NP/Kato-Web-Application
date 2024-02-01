@@ -92,186 +92,60 @@
         <div class="bottom_data"></div>
 
         <div class="charts-container">
-          <!--Chart for tasks remaining over time-->
-          <div id="curve_chart" class="charts"></div>
+          <div class="chart-bubble">
+            <h3 class="chart-header">Number of tasks remaining over time</h3>
 
-          <!--Chart for training remaining over time-->
-          <div id="piechart_3d" class="charts"></div>
+            <!--Chart for tasks remaining over time-->
+            <div id="curve_chart" class="charts"></div>
+          </div>
+
+          <div class="chart-bubble">
+            <h3 class="chart-header">Training remaining over time</h3>
+
+            <!--Chart for training remaining over time-->
+            <div id="piechart_3d" class="charts"></div>
+          </div>
         </div>
+
+        <!--Courses-->
+        <section class="Courses">
+          <h2>Your Courses</h2>
+          <!-- course table-->
+          <div class="course-container">
+            <div class="course-box">
+              <img src="images/course_image1.jpg" alt="" class="course-img" />
+              <h3 class="course-desc">Course A</h3>
+              <a href="" class="course-btn">view course</a>
+            </div>
+
+            <div class="course-box">
+              <img src="images/course_image1.jpg" alt="" class="course-img" />
+              <h3 class="course-desc">Course A</h3>
+              <a href="" class="course-btn">view course</a>
+            </div>
+
+            <div class="course-box">
+              <img src="images/course_image1.jpg" alt="" class="course-img" />
+              <h3 class="course-desc">Course A</h3>
+              <a href="" class="course-btn">view course</a>
+            </div>
+
+            <div class="course-box">
+              <img src="images/course_image1.jpg" alt="" class="course-img" />
+              <h3 class="course-desc">Course A</h3>
+              <a href="" class="course-btn">view course</a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
-    <!--Courses-->
-    <section class="Courses">
-      <h2>Your Courses</h2>
-      <!-- course table-->
-      <div class="course-container">
-        <div class="course-box">
-          <img src="images/course_image1.jpg" alt="" class="course-img" />
-          <h3 class="course-desc">Course A</h3>
-          <a href="" class="course-btn">view course</a>
-        </div>
+    <discord-chatbot-button
+      style="position: fixed; right: 10px; bottom: 10px"
+    ></discord-chatbot-button>
 
-        <div class="course-box">
-          <img src="images/course_image1.jpg" alt="" class="course-img" />
-          <h3 class="course-desc">Course A</h3>
-          <a href="" class="course-btn">view course</a>
-        </div>
-
-        <div class="course-box">
-          <img src="images/course_image1.jpg" alt="" class="course-img" />
-          <h3 class="course-desc">Course A</h3>
-          <a href="" class="course-btn">view course</a>
-        </div>
-
-        <div class="course-box">
-          <img src="images/course_image1.jpg" alt="" class="course-img" />
-          <h3 class="course-desc">Course A</h3>
-          <a href="" class="course-btn">view course</a>
-        </div>
-      </div>
-    </section>
-
-        
-    </div>
-
-        
-
-
-    
-
-
-
-    <!---
-    <div id="mainContainer">
-        <div class="dashboard_main">
-            <div class="dashboard_header">
-                <h1>Dashboard</h1>            
-            </div>
-            <ul class="insights">
-                <li><i class='bx bxs-calendar' ></i>
-                    <span class="insight_info">
-                        <h3>4</h3>
-                        <p>Days to arrival</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-graduation' ></i>
-                    <span class="insight_info">
-                        <h3>6</h3>
-                        <p>Lessons</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-message-rounded' ></i>
-                    <span class="insight_info">
-                        <h3>10</h3>
-                        <p>Messages</p>
-                    </span>
-                </li>
-
-                <li><i class='bx bxs-check-square' ></i>
-                    <span class="insight_info">
-                        <h3>4</h3>
-                        <p>tasks</p>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        <div class="bottom_data">
-            <div class="messages">
-                <div class="message_header">
-                    <i class='bx bxs-chat'></i>
-                    <h3>Recent Messages</h3>
-                    <i class='bx bx-filter' ></i>
-                    <i class='bx bx-search' ></i>
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-
-                        
-                        <tr>
-                            <td>
-                                <img src="\images\Grimace.jpg" alt="">
-                                <p>Grimace</p>
-                            </td>
-                            <td>8:05</td>
-                            <td><span class="status_sent">Sent</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            --
-            <div class="reminder_list">
-                <div class="reminder_header">
-                    <i class='bx bx-notepad' id="reminder_notepad" ></i>
-                    <h3>Reminders</h3>
-                    <i class='bx bx-filter' id="reminder_filter"></i>
-                    <i class='bx bx-plus' id="reminder_plus" ></i>
-                </div>
-                <ul class="task_list">
-                   
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-
-                    
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-
-                    
-                    <li class="completed">
-                        <div class="task_title">
-                            <i class='bx bx-check-circle' ></i>
-                            <p>Start meeting</p>
-                        </div>
-                        <i class='bx bx-dots-vertical-rounded' ></i>
-                    </li>
-                </ul>
-
-            </div>
-        </div>
-    </div>
--->
-
-    <discord-chatbot-button style="position: fixed; right: 10px; bottom: 10px;"></discord-chatbot-button>
     <footer class="footer">
-        &copy; copyright @ 2024 by <span>Kato</span> | P05 PFD
+      &copy; copyright @ 2024 by <span>Kato</span> | P05 PFD
     </footer>
 
     <script src="/libs/utils.js"></script>
