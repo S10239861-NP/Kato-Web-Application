@@ -522,7 +522,8 @@ td:first-child{
     justify-content: space-between;
 }
 
-/*--------------------------------------ABOUT-----------------------------------------------*/
+/*------------------------------------------------------------------------------------*/
+/*
 .about_pg{
     
     font-family: "Poppins", sans-serif;
@@ -530,7 +531,7 @@ td:first-child{
     padding: 0;
     box-sizing: border-box;
 }
-
+*/
 .slideCardImage{
     position: relative;
     height: 150px;
@@ -551,8 +552,7 @@ td:first-child{
 .about_body{
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background: whitesmoke;
 }
 
@@ -967,7 +967,7 @@ td:first-child{
 }
 
 .course-desc{
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: black;
     margin-top: .5rem;
     padding: .5rem 0;
@@ -987,11 +987,40 @@ td:first-child{
     transition:all 0.4s ease; 
 }
 
+/*video*/
+.vid-details{
+    background-color: var(--white);
+    padding: 2rem;
+}
+
+.vid-details .video{
+    width: 100%;
+    border-radius: .5rem;
+}
+
+.elearning-title{
+    font-size: 2rem;
+    color: black;
+    padding: 1.25rem 0;
+    display: flex;
+}
+
+.vid-desc{
+    padding-top: 2rem;
+}
+
+.vid-desc p{
+    line-height: 2;
+    font-size: 1.1rem;
+    color: rgb(114, 114, 114);
+}
+
+/*footer*/
 .footer{
     position:sticky;
     bottom: 0; right: 0; left: 0;
-    background-color: white;
-    color: black;
+    background-color: rgb(82, 82, 82);
+    color:white;
     border-top: var(--border);
     padding: 2rem 1.5rem;
     text-align: center;
@@ -1000,6 +1029,44 @@ td:first-child{
     z-index: 500;
 }
 
+.team-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.team-member{
+    border-radius:.5rem;
+    padding: 2rem;
+    background-color: white;
+}
+
+.team-member h3{
+    color: black;
+}
+
+.team-member img{
+    height:100px;
+    width: 100px;
+}
+
+.theTeam{
+    width: 100%;
+    height: auto;
+    background-color: aliceblue;
+}
+
+.teamHeading{
+    margin: 30px;
+}
+
+.teamHeadingLine{
+    height: 1px;
+    background-color: rgb(189, 185, 185);
+    margin:30px 
+}
 
 
 
