@@ -1,44 +1,76 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" class="about_pg">
-    <head>
-        <meta charset="UTF-8">
-        <title>About us</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="swiper-bundle.min.css">
-        <!--Boxicon link-->
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-<body class="about_body">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About us</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="swiper-bundle.min.css" />
+    <!--Boxicon link-->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="about_body">
     <!--SIDEBAR-->
     <side-bar></side-bar>
 
-    <div class="slide-container swiper" id="mainContainer">  
-        <div class="slide_content">
-            <div class="slideCardWrapper swiper-wrapper">
-                <div class="slideCard swiper-slide">
-                    <div class="slideCardImageContent">
-                        <span class="overlay"></span>
-                        <div class="slideCardImage">
-                            <img src="images/rando1.jpg" alt="" class="slideCard-img">
-                        </div>
-                    </div>
-                    <div class="slideCardContent">
-                        <h2 class="staffName">David Dell</h2>
-                        <p class="staffRole">Web developer</p>
-                        <button class="slideCardBtn">View more</button>
-                    </div>
-                </div>
-            </div>
+    <section class="theTeam">
+      <h1 class="teamHeading">Our Team</h1>
+      <div class="teamHeadingLine"></div>
+      <div class="team-container">
+        <div class="team-member">
+          <img src="./images/team_member1.png" alt="" />
+          <div>
+            <h3>john deo</h3>
+            <span>developer</span>
+            <a href="" class="course-btn"> view details</a>
+          </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination"></div>
-        
-    </div>
-    
-    <discord-chatbot-button style="position: fixed; right: 10px; bottom: 10px;"></discord-chatbot-button>
+
+        <div class="team-member">
+          <img src="./images/team_member1.png" alt="" />
+          <div>
+            <h3>john deo</h3>
+            <span>developer</span>
+            <a href="" class="course-btn"> view details</a>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <img src="./images/team_member1.png" alt="" />
+          <div>
+            <h3>john deo</h3>
+            <span>developer</span>
+            <a href="" class="course-btn"> view details</a>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <img src="./images/team_member1.png" alt="" />
+          <div>
+            <h3>john deo</h3>
+            <span>developer</span>
+            <a href="" class="course-btn"> view details</a>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <img src="./images/team_member1.png" alt="" />
+          <div>
+            <h3>john deo</h3>
+            <span>developer</span>
+            <a href="" class="course-btn"> view details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <discord-chatbot-button
+      style="position: fixed; right: 10px; bottom: 10px"
+    ></discord-chatbot-button>
 
     <script type="module" src="./about.js"></script>
-</body>
+  </body>
 </html>
