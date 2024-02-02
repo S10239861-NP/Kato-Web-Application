@@ -64,6 +64,8 @@ function onTrainingCardMouseDown()
     trainingDetailsContainer.classList.add("active");
 
     sidebar.classList.add("fully-hidden");
+
+    mainContainer.classList.add("invisible");
 }
 
 function updateDisplayedTrainings()
@@ -136,4 +138,6 @@ closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
     trainingDetailsContainer.classList.remove("active");
 
     sidebar.classList.remove("fully-hidden");
+
+    mainContainer.classList.remove("invisible");
 });

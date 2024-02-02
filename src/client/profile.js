@@ -1,7 +1,4 @@
-let menuBtn = document.querySelector("#menu_btn");
+import * as components from "./libs/components.js";
 
-let sidebar = document.querySelector(".sidebar");
+components.init();
 
-menuBtn.onclick = function() {
-    sidebar.classList.toggle("active");
-};
