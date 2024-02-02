@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="training_pg">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Training</title>
+    <link rel="stylesheet" href="style.css" />
+    <!--Boxicon link-->
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body class="training_body">
+    <!--SIDEBAR-->
+    <side-bar id="sidebar"></side-bar>
+
+    <div id="trainingDetailsContainer" class="details">
+      <i id="closeTrainingDetailsButton" class="bx bx-x close-details"></i>
+      <div class="detail_header">
+        <img src="./images/workato.png" alt="" />
+        <h2 id="trainingDetailsContainerCourseNameLabel">Topic 1</h2>
+        <p id="trainingDetailsContainerCategoryNameLabel">Web Design</p>
+      </div>
+      <hr class="divider" />
+      <div class="detail_disc">
+        <div class="about">
+          <h4>About</h4>
+          <p id="trainingDetailsContainerDescriptionLabel">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+      </div>
+      <hr class="divider" />
+      <button class="start_btn">Start</button>
+    </div>
+
+    <!--BODY-->
+    <div id="mainContainer" style="margin: 0px; padding: 0px">
+      <div class="main_header">
+        <div class="search">
+          <input type="text" placeholder="Search" />
+          <button class="search_btn"><i class="bx bx-search"></i></button>
+        </div>
+      </div>
+
+      <!--TOPICS-->
+      <div class="filter-wrapper">
+        <p>Topics</p>
+        <div id="categoryFilterContainer" class="filter">
+          <!--
+                <button class="filter_btn">Topic 1</button>
+                <button class="filter_btn">Topic 2</button>
+                <button class="filter_btn">Topic 3</button>
+                <button class="filter_btn">Topic 4</button>
+                <button class="filter_btn">Topic 5</button>
+                <button class="filter_btn">Topic 6</button>
+                -->
+        </div>
+      </div>
+
+      <!---SORT-->
+      <div class="sort">
+        <p>Sort</p>
+        <div class="sort-list">
+          <select>
+            <option value="0">All</option>
+            <option value="1">Newest Post</option>
+            <option value="2">Oldest Post</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Card container -->
+      <div id="cardContainer" class="card-container">
+        <!--CARDS-->
+      </div>
+    </div>
+
+    <discord-chatbot-button style="position: fixed; right: 10px; bottom: 10px"></discord-chatbot-button>
+
+    <script type="module" src="./training.js"></script>
+  </body>
+</html>

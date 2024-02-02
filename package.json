@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "The Kato web application.",
   "scripts": {
-    "start": "node server/server.js"
+    "start": "npm run build && npm run startServer",
+    "build": "vite build --emptyOutDir --config ./vite.config.js",
+    "startServer": "node ./src/server/server.js"
   },
   "author": "Arcane",
   "license": "ISC",
@@ -11,6 +13,10 @@
     "cookie": "^0.6.0",
     "istextorbinary": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "swiper": "^11.0.5"
+  },
+  "devDependencies": {
+    "vite": "^5.0.12"
   }
 }
