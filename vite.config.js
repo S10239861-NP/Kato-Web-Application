@@ -12,6 +12,8 @@ let srcClientFolderPath = path.resolve(srcFolderPath, "client");
 
 let srcClientComponentsFolderPath = path.resolve(srcClientFolderPath, "components");
 
+let srcClientStaticAssetsFolderPath = path.resolve(srcClientFolderPath, "static-assets");
+
 let publicFolderPath = path.resolve(currentFolderPath, "public");
 
 /**
@@ -84,4 +86,5 @@ export default vite.defineConfig({
     },
     outDir: publicFolderPath
   },
+  publicDir: srcClientStaticAssetsFolderPath
 });
