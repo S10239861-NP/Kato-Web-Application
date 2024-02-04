@@ -1,3 +1,5 @@
+import * as utils from "./utils.js";
+
 class BaseComponent extends HTMLElement
 {
     isInit = false;
@@ -282,14 +284,9 @@ class Sidebar extends BaseComponent
 
     #onInitBoundFunc = null;
 
-    constructor()
-    {
-        super();
+    #onWindowResizeBoundFunc = null;
 
-        this.#onInitBoundFunc = this.onInit.bind(this);
-    }
-
-    onInit()
+    #onInit()
     {
         this.#menuButton = this.shadow.querySelector("#menu_btn");
 
@@ -304,8 +301,28 @@ class Sidebar extends BaseComponent
 
         this.#logoutButton.onmousedown = (mouseEvent) =>
         {
+            sessionStorage.removeItem(
+                "staffIDOfCurrentUser"
+            );
+
             window.location.href = "/";
         };
+
+        window.addEventListener("resize", this.#onWindowResizeBoundFunc);
+    }
+
+    #onWindowResize()
+    {
+        
+    }
+
+    constructor()
+    {
+        super();
+
+        this.#onInitBoundFunc = this.#onInit.bind(this);
+
+        this.#onWindowResizeBoundFunc = this.#onWindowResize.bind(this);
     }
 
     connectedCallback()
@@ -319,51 +336,129 @@ class Sidebar extends BaseComponent
     }
 }
 
+class TeamMemberCard extends BaseComponent
+{
+    static html = "";
+
+    static observedAttributes = [
+        "name",
+        "role"
+    ];
+
+    /**
+     * @type {HTMLElement}
+     */
+    #nameHeader = null;
+
+    /**
+     * @type {HTMLElement}
+     */
+    #roleLabel = null;
+
+    /**
+     * @type {HTMLButtonElement}
+     */
+    #viewMemberDetailsButton = null;
+
+    #onInitBoundFunc = null;
+
+    #onViewMemberDetailsButtonMouseDownBoundFunc = null;
+
+    #onInit()
+    {
+        this.#nameHeader = this.shadow.getElementById(
+            "nameHeader"
+        );
+
+        this.#roleLabel = this.shadow.getElementById(
+            "roleLabel"
+        );
+
+        this.#viewMemberDetailsButton = this.shadow.getElementById(
+            "viewMemberDetailsButton"
+        );
+
+        this.#viewMemberDetailsButton.addEventListener(
+            "mousedown",
+            this.#onViewMemberDetailsButtonMouseDownBoundFunc
+        );
+    }
+
+    #onViewMemberDetailsButtonMouseDown()
+    {
+
+    }
+
+    constructor()
+    {
+        super();
+
+        this.#onInitBoundFunc = this.#onInit.bind(this);
+
+        this.#onViewMemberDetailsButtonMouseDownBoundFunc = this.#onViewMemberDetailsButtonMouseDown.bind(this);
+    }
+
+    connectedCallback()
+    {
+        this.init(TeamMemberCard.html, this.#onInitBoundFunc);
+    }
+
+    attributeChangedCallback(attribName, oldValue, newValue)
+    {
+        this.init(TeamMemberCard.html, this.#onInitBoundFunc);
+
+        if (attribName == "name")
+        {
+            this.#nameHeader.innerText = newValue;
+
+            return;
+        }
+
+        if (attribName == "role")
+        {
+            this.#roleLabel.innerText = newValue;
+
+            return;
+        }
+    }
+}
+
+function getHTMLForComponent(urlPath)
+{
+    let componentHTMLRequest = new XMLHttpRequest();
+
+    componentHTMLRequest.open("GET", urlPath, false);
+
+    componentHTMLRequest.send();
+
+    return componentHTMLRequest.responseText;
+}
+
 /**
  * This function must be called at the start (preferably at the start of the script or when the page loads) in order to allow the
  * custom components defined in this library to be rendered.
  */
 function init()
 {
-    let trainingCardHTMLRequest = new XMLHttpRequest();
-
-    trainingCardHTMLRequest.open("GET", "/components/training-card.html", false);
-
-    trainingCardHTMLRequest.send();
-
-    TrainingCard.html = trainingCardHTMLRequest.responseText;
+    TrainingCard.html = getHTMLForComponent("/components/training-card.html");
 
     customElements.define("training-card", TrainingCard);
 
-    let discordChatbotButtonHTMLRequest = new XMLHttpRequest();
-
-    discordChatbotButtonHTMLRequest.open("GET", "/components/discord-chatbot-button.html", false);
-
-    discordChatbotButtonHTMLRequest.send();
-
-    DiscordChatbotButton.html = discordChatbotButtonHTMLRequest.responseText;
+    DiscordChatbotButton.html = getHTMLForComponent("/components/discord-chatbot-button.html");
 
     customElements.define("discord-chatbot-button", DiscordChatbotButton);
 
-    let discordChatbotPanelHTMLRequest = new XMLHttpRequest();
-
-    discordChatbotPanelHTMLRequest.open("GET", "/components/discord-chatbot-panel.html", false);
-
-    discordChatbotPanelHTMLRequest.send();
-
-    DiscordChatbotPanel.html = discordChatbotPanelHTMLRequest.responseText;
+    DiscordChatbotPanel.html = getHTMLForComponent("/components/discord-chatbot-panel.html");
 
     customElements.define("discord-chatbot-panel", DiscordChatbotPanel);
 
-    let sidebarHTMLRequest = new XMLHttpRequest();
-
-    sidebarHTMLRequest.open("GET", "/components/sidebar.html", false);
-
-    sidebarHTMLRequest.send();
-
-    Sidebar.html = sidebarHTMLRequest.responseText;
+    Sidebar.html = getHTMLForComponent("/components/sidebar.html");
 
     customElements.define("side-bar", Sidebar);
+
+    TeamMemberCard.html = getHTMLForComponent("/components/team-member-card.html");
+
+    customElements.define("team-member-card", TeamMemberCard);
 }
 
 export {

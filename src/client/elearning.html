@@ -10,16 +10,17 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <body>
+  
+  <body class="e-learning-body">
     <!--SIDEBAR-->
     <side-bar></side-bar>
 
-    <section class="elearning-vid">
+    <div class="elearning-vid">
       <div class="vid-details">
         <video
-          src="images/elearning_vid.mp4"
-          class="video"
-          poster="images/course_image1.jpg"
+          src="./videos/e-learning-vid.mp4"
+          class="e-learning-video"
+          poster="./images/course_image1.jpg"
           controls
           autoplay
         ></video>
@@ -44,15 +45,15 @@
           </p>
         </div>
       </div>
-    </section>
+    </div>
 
     <discord-chatbot-button
       style="position: fixed; right: 10px; bottom: 10px"
     ></discord-chatbot-button>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
       &copy; copyright @ 2024 by <span>Kato</span> | P05 PFD
-    </footer>
+    </footer> -->
 
     <script type="module" src="./elearning.js"></script>
   </body>

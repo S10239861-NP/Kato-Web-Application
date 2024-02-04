@@ -16,6 +16,8 @@ const { error } = require("console");
 
 const path = require("path");
 
+const httpExtra = require("./libs/http-extra");
+
 const jwtSecret = "0RAeW74P3LMFUSX";
 
 const serverHostName = "127.0.0.1";
@@ -52,8 +54,6 @@ let server = http.createServer(onRequestReceived);
  * @type {sqlite.Database}
  */
 let katoDB = null;
-
-let setupKatoDB = false;
 
 /**
  * 
@@ -354,12 +354,176 @@ function handleResourceRequest(request, requestURL, response)
     });
 }
 
+function getOnboardingEmployeeFromDB(staffID, password)
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            katoDB.all(
+                `SELECT * FROM OnboardingEmployees WHERE StaffID = ? AND Password = ?;`,
+                [staffID, password],
+                (error, rows) =>
+                {
+                    if (error != null)
+                    {
+                        console.log(
+                            "An error occurred while attempting to fetch rows from the Employees table of the main database."
+                        );
+        
+                        logError(error);
+
+                        resolve(null);
+
+                        return;
+                    }
+                    
+                    if (rows.length == 0)
+                    {
+                        resolve(null);
+
+                        return;
+                    }
+
+                    resolve(rows[0]);
+                }
+            );
+        }
+    );
+}
+
+function getAllTrainingModulesFromDB()
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            katoDB.all("SELECT * FROM Training;", [], (error, rows) =>
+            {
+                if (error != null)
+                {
+                    logError(error);
+
+                    return;
+                }
+
+                let allTrainingModules = [];
+
+                for (const row of rows)
+                {
+                    allTrainingModules.push(
+                        {
+                            name: row.Name,
+                            description: row.Description
+                        }
+                    );
+                }
+
+                resolve(allTrainingModules);
+            });
+        }
+    );
+}
+
+function getLessonsForTrainingModule(trainingModuleName)
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            katoDB.all(
+                `SELECT * FROM TrainingModuleLessons WHERE TrainingModuleLessons.TrainingModuleName = '?';`,
+                [trainingModuleName],
+                (error, rows) =>
+                {
+                    if (error != null)
+                    {
+                        logError(error);
+
+                        return;
+                    }
+
+                    let lessonsForTrainingModule = [];
+
+                    for (const row of rows)
+                    {
+                        lessonsForTrainingModule.push(
+                            {
+                                name: row.Name,
+                                trainingModuleName: row.TrainingModuleName,
+                                description: row.Description,
+                                estimatedNumMinutesToComplete: row.EstimatedNumMinutesToComplete
+                            }
+                        );
+                    }
+
+                    resolve(lessonsForTrainingModule);
+                }
+            );
+        }
+    );
+}
+
+function getOnboardingEmployee(staffID)
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            katoDB.get(
+                "SELECT * FROM OnboardingEmployees WHERE OnboardingEmployees.StaffID = ?;",
+                [staffID],
+                (error, row) =>
+                {
+                    if (error != null)
+                    {
+                        logError(error);
+
+                        resolve(null);
+
+                        return;
+                    }
+
+                    resolve(row);
+                }
+            );
+        }
+    );
+}
+
+/**
+ * Returns a list of members in the team that the onboarding employee is assigned to.
+ */
+function getMembersOfTeamForOnboardingEmployeeFromDB(onboardingEmployeeStaffID)
+{
+    return new Promise(
+        async (resolve, reject) =>
+        {
+            let onboardingEmployee = await getOnboardingEmployee(onboardingEmployeeStaffID);
+
+            katoDB.all(
+                "SELECT * FROM Employees WHERE Employees.TeamID = ?;",
+                [onboardingEmployee.TeamID],
+                (error, rows) =>
+                {
+                    if (error != null)
+                    {
+                        logError(error);
+
+                        resolve(null);
+
+                        return;
+                    }
+
+                    resolve(rows);
+                }
+            );
+        }
+    );
+}
+
 /**
  * 
  * @param {http.IncomingMessage} request 
  * @param {http.ServerResponse} response 
  */
-function onRequestReceived(request, response)
+async function onRequestReceived(request, response)
 {
     let requestURL = new URL(request.url, `http://localhost:${serverPort}`);
 
@@ -380,115 +544,133 @@ function onRequestReceived(request, response)
     {
         if (requestURL.pathname == "/login")
         {
-            let requestBody = "";
+            let requestBody = await httpExtra.getRequestBody(
+                request
+            );
 
-            request.on("data", (chunk) =>
+            let requestBodyObj = JSON.parse(requestBody);
+
+            let employee = await getOnboardingEmployeeFromDB(
+                requestBodyObj.staffID,
+                requestBodyObj.password
+            );
+
+            if (employee != null)
             {
-                requestBody += chunk;
-            });
-
-            request.on("end", () =>
-            {
-                let requestBodyObj = JSON.parse(requestBody);
-
-                katoDB.all(
-                    `SELECT * FROM Employee WHERE StaffID = ? AND Password = ?;`,
-                    [requestBodyObj.staffID, requestBodyObj.password],
-                    (error, rows) =>
+                jwt.sign(
+                    employee,
+                    jwtSecret,
+                    (jwtSigningError, token) =>
                     {
-                        if (error != null)
+                        if (jwtSigningError != null)
                         {
-                            console.log(
-                                "An error occurred while attempting to fetch rows from the Employees table of the main database."
-                            );
+                            console.log("An error occurred while attempting to sign a JSON web token.");
 
-                            logError(error);
+                            logError(jwtSigningError);
 
                             returnInternalErrorResponse(response);
 
                             return;
                         }
 
-                        if (rows.length > 0)
-                        {
-                            jwt.sign(
-                                {
-                                    staffID: rows[0].StaffID,
-                                    password: rows[0].Password
-                                },
-                                jwtSecret,
-                                (jwtSigningError, token) =>
-                                {
-                                    if (jwtSigningError != null)
-                                    {
-                                        console.log("An error occurred while attempting to sign a JSON web token.");
+                        response.writeHead(200, "Success", {
+                            "set-cookie": cookie.serialize("authToken", token)
+                        });
 
-                                        logError(jwtSigningError);
+                        response.write(
+                            ""
+                        );
 
-                                        returnInternalErrorResponse(response);
-
-                                        return;
-                                    }
-
-                                    response.writeHead(200, "Success", {
-                                        "set-cookie": cookie.serialize("authToken", token)
-                                    });
-
-                                    response.write(
-                                        ""
-                                    );
-
-                                    response.end();
-                                }
-                            );
-                        }
-                        else
-                        {
-                            response.writeHead(200, "Success");
-
-                            response.write(
-                                "Incorrect credentials."
-                            );
-
-                            response.end();
-                        }
+                        response.end();
                     }
                 );
-            });
+            }
+            else
+            {
+                response.writeHead(200, "Success");
+
+                response.write(
+                    "Incorrect credentials."
+                );
+
+                response.end();
+            }
 
             return;
         }
-        else if (requestURL.pathname == "/get-trainings")
+        
+        if (requestURL.pathname == "/get-all-training-modules")
         {
-            katoDB.all("SELECT * FROM Training;", [], (error, rows) =>
-            {
-                if (error != null)
-                {
-                    logError(error);
+            let allTrainingModules = await getAllTrainingModulesFromDB();
 
-                    return;
-                }
+            response.writeHead(200, "Success");
 
-                let trainings = [];
+            response.write(JSON.stringify(allTrainingModules));
 
-                for (const row of rows)
-                {
-                    trainings.push(
-                        {
-                            courseName: row.CourseName,
-                            categoryName: row.CategoryName,
-                            duration: row.Duration,
-                            description: row.Description
-                        }
-                    );
-                }
+            response.end();
 
-                response.writeHead(200, "Success");
+            return;
+        }
 
-                response.write(JSON.stringify(trainings));
+        if (requestURL.pathname == "/get-lessons-for-training-module")
+        {
+            let requestBody = await httpExtra.getRequestBody(
+                request
+            );
 
-                response.end();
-            });
+            let requestBodyObj = JSON.parse(requestBody);
+
+            let lessonsForTrainingModule = await getLessonsForTrainingModule(
+                requestBodyObj.trainingModuleName
+            );
+
+            response.writeHead(200, "Success");
+
+            response.write(
+                JSON.stringify(lessonsForTrainingModule)
+            );
+
+            response.end();
+
+            return;
+        }
+
+        if (requestURL.pathname == "/get-team-members-for-onboarding-employee")
+        {
+            let requestBody = await httpExtra.getRequestBody(
+                request
+            );
+
+            let requestBodyObj = JSON.parse(requestBody);
+
+            let teamMembersForOnboardingEmployee = await getMembersOfTeamForOnboardingEmployeeFromDB(
+                requestBodyObj.onboardingEmployeeStaffID
+            );
+
+            response.writeHead(200, "Success");
+
+            response.write(
+                JSON.stringify(teamMembersForOnboardingEmployee)
+            );
+
+            response.end();
+
+            return;
+        }
+
+        if (requestURL.pathname == "/get-staff-id-of-current-user")
+        {
+            let requestCookies = cookie.parse(request.headers.cookie);
+
+            let authToken = jwt.decode(
+                requestCookies["authToken"]
+            );
+
+            response.writeHead(200, "Success");
+
+            response.write(authToken.StaffID);
+
+            response.end();
 
             return;
         }
@@ -512,19 +694,6 @@ function start()
     );
 }
 
-/**
- * Reserved for performing 1 or more experimental procedures. Solely to be used for development and testing purposes.
- */
-function runExperimentalTests()
-{
-
-}
-
-if (fs.existsSync(katoDBFilePath) == false)
-{
-    setupKatoDB = true;
-}
-
 katoDB = new sqlite.Database(katoDBFilePath, sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (error) =>
 {
     if (error != null)
@@ -535,8 +704,6 @@ katoDB = new sqlite.Database(katoDBFilePath, sqlite.OPEN_READWRITE | sqlite.OPEN
 
         return;
     }
-
-    runExperimentalTests();
 
     start();
 });

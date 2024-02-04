@@ -32,6 +32,11 @@ function drawChartForTrainingRemainingOverTime()
     );
     
     chart.draw(data, options);
+
+    window.addEventListener("resize", (uiEvent) =>
+    {
+        chart.draw(data, options);
+    });
 }
 
 function drawChartForTasksRemainingOverTime()
@@ -62,6 +67,11 @@ function drawChartForTasksRemainingOverTime()
     );
     
     chart.draw(data, options);
+
+    window.addEventListener("resize", (uiEvent) =>
+    {
+        chart.draw(data, options);
+    });
 }
 
 /**

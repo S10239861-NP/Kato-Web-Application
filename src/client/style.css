@@ -629,7 +629,7 @@ img {
 .charts-container {
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 }
 
 .chart-bubble {
@@ -659,6 +659,12 @@ img {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 24px;
+}
+
+@media screen and (max-width: 440px) {
+    .course-container{
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
 }
 
 .course-box{
@@ -703,15 +709,10 @@ img {
     transition:all 0.4s ease; 
 }
 
-/*video*/
-.vid-details{
-    background-color: var(--white);
-    padding: 2rem;
-}
-
-.vid-details .video{
-    /* width: 100%; */
-    border-radius: .5rem;
+.e-learning-body {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
 }
 
 .elearning-title{
@@ -719,11 +720,24 @@ img {
     color: black;
     padding: 1.25rem 0;
     display: flex;
+    margin: 0;
 }
 
-.vid-desc{
-    padding-top: 2rem;
+/* e-learning video*/
+.vid-details{
+    background-color: var(--white);
+    padding: 2rem;
 }
+
+.e-learning-video {
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0.5rem;
+}
+
+/* .vid-desc{
+    
+} */
 
 .vid-desc p{
     line-height: 2;
@@ -750,26 +764,6 @@ img {
     overflow-y: auto;
 }
 
-.team-member{
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    align-items: center;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    background-color: white;
-}
-
-.team-member h3{
-    color: black;
-    margin: 0px;
-}
-
-.team-member img{
-    height:100px;
-    width: 100px;
-}
-
 .theTeam{
     display: flex;
     flex-direction: column;
@@ -787,14 +781,6 @@ img {
 .teamHeadingLine{
     height: 1px;
     background-color: rgb(189, 185, 185);
-}
-
-.view-member-details-button {
-    border-radius: .5rem;
-    background: #000;
-    color: #0ff;
-    padding: 0.6rem;
-    font-size: 0.9rem;
 }
 
 /*

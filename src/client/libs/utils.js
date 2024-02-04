@@ -32,8 +32,55 @@ function getActualHeightOfElement(element)
     return getFloatFromPixelMeasurementString(elementComputedStyle["marginTop"]) + getFloatFromPixelMeasurementString(elementComputedStyle["paddingTop"]) + getFloatFromPixelMeasurementString(elementComputedStyle["height"]) + getFloatFromPixelMeasurementString(elementComputedStyle["marginBottom"]) + getFloatFromPixelMeasurementString(elementComputedStyle["paddingBottom"]);
 }
 
+function getViewportSize()
+{
+    let viewportWidth = window.screen.width;
+
+    let viewportHeight = window.screen.height;
+
+    return {
+        viewportWidth: viewportWidth,
+        viewportHeight: viewportHeight
+    };
+}
+
+/**
+ * 
+ * @param {XMLHttpRequest} request 
+ * @returns 
+ */
+function waitForResponse(request)
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            request.onreadystatechange = (event) =>
+            {
+                if (request.readyState == XMLHttpRequest.DONE)
+                {
+                    resolve();
+                }
+            };
+        }
+    );
+}
+
+/**
+ * 
+ * @param {XMLHttpRequest} request 
+ */
+async function getResponseText(request)
+{
+    await waitForResponse(request);
+
+    return request.responseText;
+}
+
 export {
     getFloatFromPixelMeasurementString,
     getActualWidthOfElement,
-    getActualHeightOfElement
+    getActualHeightOfElement,
+    getViewportSize,
+    waitForResponse,
+    getResponseText,
 };

@@ -136,9 +136,57 @@ Disadvantages of using React:
 
 An alternative to using React would be to instead use the native browser's custom HTML elements API. There are certain limitations to using this API (such as the fact that custom elements can sometimes take a while to render, resulting in issues like blatantly visible flickering).
 
-## List of issues found in latest analysis of codebase
+## List of issues found in latest analysis of codebase (Outdated)
 - HTML code for the sidebar is duplicated (there are separate copies of this code for each page), convert the sidebar into a component instead so that it can be used in different pages easily. This way, changes made to the sidebar will also be automatically applied to all the pages with the sidebar.
 - Sidebar and main container rely on hardcoded values to render at the correct positions, refactor HTML code for the sidebar and main container to allow them to still be rendered at their intended positions while allowing for dynamic positioning.
 
+## Revised database schema
+### Tables
+- OnboardingEmployees
+- Employees
+- Teams
+- TrainingModules
+- TrainingModuleLessons
+- OnboardingTasks
+
+### Columns for OnboardingEmployees table
+- StaffID
+- Password
+- FirstName
+- LastName
+- JobPositionName
+- DateJoined
+- TeamID
+
+### Columns for Employees table
+- FirstName
+- LastName
+- JobPositionName
+- TeamID
+
+### Columns for Teams table
+- ID
+
+### Columns for TrainingModules table
+- Name
+- Description
+
+### Columns for TrainingModuleLessons table
+- Name
+- TrainingModuleName
+- Description
+- EstimatedNumMinutesToComplete
+
+### Columns for OnboardingTasks table
+- Name
+- AssigneeStaffID
+- Description
+
+## Mock data that we will be using
+### Included training module names
+- Products and Services Training
+- Policies and Procedures Training
+- Data Security and Privacy Training
+- Communication and Collaboration Training
 
 
