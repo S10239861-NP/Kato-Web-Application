@@ -18,7 +18,7 @@ let trainingDetailsContainerCategoryNameLabel = document.getElementById("trainin
 
 let trainingDetailsContainerDescriptionLabel = document.getElementById("trainingDetailsContainerDescriptionLabel");
 
-let categoryFilterContainer = document.getElementById("categoryFilterContainer");
+// let categoryFilterContainer = document.getElementById("categoryFilterContainer");
 
 let sidebar = document.querySelector("#sidebar").shadowRoot.querySelector(".sidebar");
 
@@ -78,7 +78,7 @@ function updateDisplayedTrainings()
     {
         if (getTrainingsRequest.readyState == XMLHttpRequest.DONE && getTrainingsRequest.status == 200)
         {
-            let uniqueCategoryNames = [];
+            // let uniqueCategoryNames = [];
 
             let trainings = JSON.parse(getTrainingsRequest.responseText);
 
@@ -100,18 +100,18 @@ function updateDisplayedTrainings()
                     trainingCard
                 );
 
-                if (uniqueCategoryNames.includes(training.categoryName) == false)
-                {
-                    let newCategoryFilterButton = document.createElement("button");
+                // if (uniqueCategoryNames.includes(training.categoryName) == false)
+                // {
+                //     let newCategoryFilterButton = document.createElement("button");
 
-                    newCategoryFilterButton.classList.add("filter_btn");
+                //     newCategoryFilterButton.classList.add("filter_btn");
 
-                    newCategoryFilterButton.innerText = training.categoryName;
+                //     newCategoryFilterButton.innerText = training.categoryName;
 
-                    categoryFilterContainer.appendChild(newCategoryFilterButton);
+                //     categoryFilterContainer.appendChild(newCategoryFilterButton);
 
-                    uniqueCategoryNames.push(training.categoryName);
-                }
+                //     uniqueCategoryNames.push(training.categoryName);
+                // }
             }
         }
     };
@@ -126,12 +126,12 @@ function updateDisplayedTrainings()
 
 addEventListener("resize", (uiEvent) =>
 {
-    updateCardContainer();
+    // updateCardContainer();
 });
 
-updateCardContainer();
-
 updateDisplayedTrainings();
+
+// updateCardContainer();
 
 closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
 {

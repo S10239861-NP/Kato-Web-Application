@@ -2,19 +2,22 @@
 
 <style>
   .sidebar {
+    display: flex;
+    flex-direction: column;
     height: 100dvh;
     width: 78px;
     background: black;
     position: sticky;
     top: 0px;
     left: 0px;
-    padding: 6px 14px;
+    padding: 10px 14px;
     transition: all 0.5s ease;
     z-index: 1;
+    box-sizing: border-box;
   }
 
   .sidebar.active {
-      width: 240px;
+    width: 240px;
   }
 
   .sidebar.fully-hidden {
@@ -46,22 +49,8 @@
       font-weight: 400;
   }
 
-  .sidebar #menu_btn{
-      position: absolute;
-      color:white;
-      left: 50%;
-      top: 6px;
-      font-size: 30px;
-      height: 50px;
-      width: 50px;
-      text-align: center;
-      line-height: 50px;
-      transform: translateX(-50%);
-  }
-
   .sidebar.active #menu_btn{
       left: 90%;
-      
   }
 
   .sidebar ul{
@@ -81,16 +70,6 @@
   .sidebar ul li{
       margin: 0px 13px;
       font-size: 23px;
-  }
-
-  .sidebar .link_names{
-      opacity: 0;
-      pointer-events: none;
-  }
-
-  .sidebar.active .link_names{
-      opacity: 1;
-      pointer-events: auto;
   }
 
   .sidebar ul li a{
@@ -117,7 +96,7 @@
       text-align: center;
   }
 
-  .nav_list{
+  .nav_list {
       padding: 0;
   }
 
@@ -136,54 +115,48 @@
       background:rgb(33, 33, 33);
   }
 
-  .profile_content .profile .profile_details{
-      display: flex;
-      align-items: center;
-      opacity:0;
-      pointer-events: none;
-      white-space: nowrap;
+  .profile {
+    margin-top: auto;
+  }
+
+  .profile_details {
+    display: none;
+    flex-direction: row;
+  }
+
+  .name, .job, #logout {
+    color: white;
   }
 
   .sidebar.active .profile .profile_details{
-      opacity: 1;
-      pointer-events: auto;
+    display: flex;
+    pointer-events: auto;
   }
 
   .profile .profile_details img{
       height: 45px;
-      width:45px;
+      width: 45px;
       object-fit: cover;
       border-radius: 12px;
   }
 
-  .profile .profile_details .name_job{
-      margin-left:10px;
+  .name_job{
+      margin-left: 10px;
   }
 
-  .profile .profile_details .name{
+  .name{
       font-size: 15px;
       font-weight: 400;
   }
 
-  .profile .profile_details .job{
+  .job{
       font-size: 12px;
-      font-weight:bold;
+      font-weight: bold;
   }
 
-  .profile #logout{
-      position: absolute;
-      left: 60%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      min-width:50px;
-      line-height:50px;
-      font-size: 20px;
-      border-radius: 12px;
-      font: size 17px;
-  }
-
-  .sidebar.active .profile #logout{ 
-      left: 88%;
+  .profile {
+    display: flex;
+    flex-direction: row;
   }
 
   .detail_header img{
@@ -202,58 +175,154 @@
   .detail_disc{
       line-height: 1.5;
   }
+
+  .logos-and-links-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  .logos-and-links-container > a {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .logos-and-links-container > a:hover {
+    background-color: aqua;
+    border-radius: 12px;
+    transition: all 0.4s ease-in-out;
+  }
+
+  .sidebar.active .logos-and-links-container > a {
+    justify-content: start;
+  }
+
+  .sidebar-option-icon {
+    color: #fff;
+    font-size: 30px;
+  }
+  
+  .link_names {
+    color: #fff;
+  }
+
+  .sidebar-header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .sidebar.active .sidebar-header-container {
+    justify-content: space-between;
+  }
+
+  .sidebar-header-container > * {
+    color: white;
+  }
+
+  .sidebar.active .link_names {
+    display: initial;
+  }
+
+  .sidebar-header-logo-container {
+    display: none;
+  }
+
+  .sidebar.active .sidebar-header-logo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 4px;
+  }
+
+  .kato-icon {
+    font-size: 30px;
+  }
+
+  #menu_btn{
+    color:white;
+    font-size: 36px;
+    text-align: center;
+  }
+
+  .link_names{
+    display: none;
+    pointer-events: none;
+  }
+
+  .sidebar.active .link_names{
+    display: initial;
+    pointer-events: auto;
+  }
+
+  .logo_name {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    margin-left: auto;
+    padding: 16px 16px;
+    border-radius: 12px;
+  }
+
+  #logout::before {
+    transform: translateX(-2px);
+  }
 </style>
 
 <div class="sidebar">
-  <div class="logo_content">
-    <div class="logo">
-      <i class="bx bxl-kickstarter"></i>
+  <div class="logos-and-links-container">
+    <div class="sidebar-header-container">
+      <div class="sidebar-header-logo-container">
+        <i class="bx bxl-kickstarter kato-icon"></i>
 
-      <div class="logo_name">Kato</div>
-    </div>
-
-    <i class="bx bx-menu" id="menu_btn"></i>
-  </div>
-
-  <ul class="nav_list">
-    <li>
-      <a href="/dashboard.html">
-        <i class="bx bxs-dashboard"></i>
-
-        <span class="link_names">Dashboard</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="/training.html">
-        <i class="bx bx-briefcase-alt"></i>
-
-        <span class="link_names">Training</span>
-      </a>
-    </li>
-
-    <li>
-      <a href="/about.html">
-        <i class="bx bxs-group"></i>
-
-        <span class="link_names">Know your team</span>
-      </a>
-    </li>
-  </ul>
-
-  <div class="profile_content">
-    <div class="profile">
-      <div class="profile_details">
-        <img src="/assets/profile-e-xS9XvX.jpg" alt="" />
-
-        <div class="name_job">
-          <div class="name">lulu</div>
-
-          <div class="job">Web Designer</div>
-        </div>
+        <div class="logo_name">Kato</div>
       </div>
 
-      <i class="bx bx-log-out" id="logout"></i>
+      <i class="bx bx-menu" id="menu_btn"></i>
     </div>
+
+    <a href="/dashboard.html">
+      <i class="bx bxs-dashboard sidebar-option-icon"></i>
+
+      <span class="link_names">Dashboard</span>
+    </a>
+
+    <a href="/training.html">
+      <i class="bx bx-briefcase-alt sidebar-option-icon"></i>
+
+      <span class="link_names">Training</span>
+    </a>
+
+    <a href="/about.html">
+      <i class="bx bxs-group sidebar-option-icon"></i>
+
+      <span class="link_names">Know your team</span>
+    </a>
+  </div>
+
+  <div class="profile">
+    <div class="profile_details">
+      <img src="/assets/profile-e-xS9XvX.jpg" alt="" />
+
+      <div class="name_job">
+        <div class="name">Lulu</div>
+
+        <div class="job">Web Designer</div>
+      </div>
+    </div>
+
+    <i class="bx bx-log-out" id="logout"></i>
   </div>
 </div>
