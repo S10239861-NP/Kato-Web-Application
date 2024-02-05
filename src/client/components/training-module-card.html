@@ -1,0 +1,55 @@
+<style>
+    img {
+        max-width: 100%;
+    }
+
+    .training-module-card {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        border-radius: .5rem;
+        background-color: white;
+        padding: 20px;
+        height: min-content;
+    }
+    
+    .training-module-thumbnail {
+        border-radius: 0.5rem;
+        height: 60%;
+        object-fit: cover;
+    }
+    
+    .training-module-name-label {
+        font-size: 24px;
+        color: black;
+        margin: 0;
+        margin-top: 0.5rem;
+        padding: 0.5rem 0;
+    }
+    
+    .view-lessons-btn{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: .5rem;
+        background: black;
+        color: cyan;
+        padding: 1rem;
+        font-size: 16px;
+    }
+    
+    .view-lessons-btn:hover{
+        color: black;
+        background: cyan;
+        transition:all 0.4s ease; 
+    }
+</style>
+
+<div class="training-module-card">
+    <img id="trainingModuleThumbnail" src="../images/course_image1.jpg" alt="" class="training-module-thumbnail" />
+    
+    <h3 id="trainingModuleNameLabel" class="training-module-name-label">Module A</h3>
+    
+    <a id="viewLessonsButton" class="view-lessons-btn">View lessons</a>
+</div>

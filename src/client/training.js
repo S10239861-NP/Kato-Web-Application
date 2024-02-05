@@ -2,8 +2,6 @@ import * as utils from "./libs/utils.js";
 
 import * as components from "./libs/components.js";
 
-components.init();
-
 let cardContainer = document.getElementById("cardContainer");
 
 let mainContainer = document.getElementById("mainContainer");
@@ -18,9 +16,9 @@ let trainingDetailsContainerCategoryNameLabel = document.getElementById("trainin
 
 let trainingDetailsContainerDescriptionLabel = document.getElementById("trainingDetailsContainerDescriptionLabel");
 
-// let categoryFilterContainer = document.getElementById("categoryFilterContainer");
+let startTrainingModuleLessonButton = document.querySelector("#startTrainingModuleLessonButton");
 
-let sidebar = document.querySelector("#sidebar").shadowRoot.querySelector(".sidebar");
+let sidebar = null;
 
 /*
 This implementation has been tested and works on the default window size as well as other window sizes.
@@ -55,11 +53,15 @@ function updateCardContainer()
 
 function onTrainingCardMouseDown()
 {
-    trainingDetailsContainerCourseNameLabel.innerText = this.getAttribute("course-name");
+    let trainingModuleLessonName = this.getAttribute("course-name");
+
+    trainingDetailsContainerCourseNameLabel.innerText = trainingModuleLessonName;
 
     trainingDetailsContainerCategoryNameLabel.innerText = this.getAttribute("category-name");
 
     trainingDetailsContainerDescriptionLabel.innerText = this.getAttribute("description");
+
+    sessionStorage.setItem("mostRecentlySelectedTrainingModuleLessonName", trainingModuleLessonName);
 
     trainingDetailsContainer.classList.add("active");
 
@@ -68,76 +70,84 @@ function onTrainingCardMouseDown()
     mainContainer.classList.add("invisible");
 }
 
-function updateDisplayedTrainings()
+function onStartTrainingModuleLessonButtonMouseDown()
 {
-    let getTrainingsRequest = new XMLHttpRequest();
-
-    getTrainingsRequest.open("POST", "/get-trainings", true);
-
-    getTrainingsRequest.onload = (progressEvent) =>
-    {
-        if (getTrainingsRequest.readyState == XMLHttpRequest.DONE && getTrainingsRequest.status == 200)
-        {
-            // let uniqueCategoryNames = [];
-
-            let trainings = JSON.parse(getTrainingsRequest.responseText);
-
-            for (const training of trainings)
-            {
-                let trainingCard = document.createElement("training-card");
-
-                trainingCard.setAttribute("course-name", training.courseName);
-
-                trainingCard.setAttribute("category-name", training.categoryName);
-
-                trainingCard.setAttribute("duration", training.duration);
-
-                trainingCard.setAttribute("description", training.description);
-
-                trainingCard.addEventListener("mousedown", onTrainingCardMouseDown.bind(trainingCard));
-
-                cardContainer.appendChild(
-                    trainingCard
-                );
-
-                // if (uniqueCategoryNames.includes(training.categoryName) == false)
-                // {
-                //     let newCategoryFilterButton = document.createElement("button");
-
-                //     newCategoryFilterButton.classList.add("filter_btn");
-
-                //     newCategoryFilterButton.innerText = training.categoryName;
-
-                //     categoryFilterContainer.appendChild(newCategoryFilterButton);
-
-                //     uniqueCategoryNames.push(training.categoryName);
-                // }
-            }
-        }
-    };
-
-    getTrainingsRequest.onerror = (progressEvent) =>
-    {
-        console.error(getTrainingsRequest.statusText);
-    };
-
-    getTrainingsRequest.send();
+    window.location.href = "/elearning.html";
 }
 
-addEventListener("resize", (uiEvent) =>
+async function updateDisplayedTrainings()
 {
+    let getLessonsRequest = new XMLHttpRequest();
+
+    getLessonsRequest.open("POST", "/get-lessons-for-training-module", true);
+
+    getLessonsRequest.onerror = (progressEvent) =>
+    {
+        console.error(getLessonsRequest.statusText);
+    };
+
+    let trainingModuleName = sessionStorage.getItem("mostRecentlySelectedTrainingModuleName");
+
+    getLessonsRequest.send(
+        JSON.stringify(
+            {
+                trainingModuleName: trainingModuleName
+            }
+        )
+    );
+
+    await utils.waitForResponse(getLessonsRequest);
+
+    if (getLessonsRequest.status == 200)
+    {
+        let lessons = JSON.parse(getLessonsRequest.responseText);
+
+        for (const lesson of lessons)
+        {
+            let trainingModuleLessonCard = document.createElement("training-card");
+
+            trainingModuleLessonCard.setAttribute("course-name", lesson.Name);
+
+            trainingModuleLessonCard.setAttribute("category-name", lesson.TrainingModuleName);
+
+            trainingModuleLessonCard.setAttribute("duration", lesson.EstimatedNumMinutesToComplete);
+
+            trainingModuleLessonCard.setAttribute("description", lesson.Description);
+
+            trainingModuleLessonCard.addEventListener("mousedown", onTrainingCardMouseDown.bind(trainingModuleLessonCard));
+
+            cardContainer.appendChild(
+                trainingModuleLessonCard
+            );
+        }
+    }
+}
+
+async function main()
+{
+    components.init();
+
+    sidebar = document.querySelector("#sidebar").shadowRoot.querySelector(".sidebar");
+
+    window.addEventListener("resize", (uiEvent) =>
+    {
+        // updateCardContainer();
+    });
+
+    await updateDisplayedTrainings();
+
     // updateCardContainer();
-});
 
-updateDisplayedTrainings();
+    closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
+    {
+        trainingDetailsContainer.classList.remove("active");
 
-// updateCardContainer();
+        sidebar.classList.remove("fully-hidden");
 
-closeTrainingDetailsButton.addEventListener("mousedown", (mouseEvent) =>
-{
-    trainingDetailsContainer.classList.remove("active");
+        mainContainer.classList.remove("invisible");
+    });
 
-    sidebar.classList.remove("fully-hidden");
+    startTrainingModuleLessonButton.addEventListener("mousedown", onStartTrainingModuleLessonButtonMouseDown);
+}
 
-    mainContainer.classList.remove("invisible");
-});
+main();

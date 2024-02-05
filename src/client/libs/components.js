@@ -423,6 +423,75 @@ class TeamMemberCard extends BaseComponent
     }
 }
 
+class TrainingModuleCard extends BaseComponent
+{
+    static html = "";
+
+    static observedAttributes = [
+        "name"
+    ];
+
+    #onInitBoundFunc = null;
+
+    /**
+     * @type {HTMLImageElement}
+     */
+    #trainingModuleThumbnail = null;
+
+    /**
+     * @type {HTMLElement}
+     */
+    #trainingModuleNameLabel = null;
+
+    /**
+     * @type {HTMLButtonElement}
+     */
+    #viewLessonsButton = null;
+
+    #onInit()
+    {
+        this.#trainingModuleThumbnail = this.shadow.querySelector("#trainingModuleThumbnail");
+
+        this.#trainingModuleNameLabel = this.shadow.querySelector("#trainingModuleNameLabel");
+
+        this.#viewLessonsButton = this.shadow.querySelector("#viewLessonsButton");
+
+        this.#viewLessonsButton.addEventListener(
+            "mousedown",
+            this.#onViewLessonsButtonMouseDown.bind(this)
+        );
+    }
+
+    #onViewLessonsButtonMouseDown()
+    {
+        sessionStorage.setItem("mostRecentlySelectedTrainingModuleName", this.#trainingModuleNameLabel.innerText);
+
+        window.location.href = "/training.html";
+    }
+
+    constructor()
+    {
+        super();
+
+        this.#onInitBoundFunc = this.#onInit.bind(this);
+    }
+
+    connectedCallback()
+    {
+        this.init(TrainingModuleCard.html, this.#onInitBoundFunc);
+    }
+
+    attributeChangedCallback(attribName, oldValue, newValue)
+    {
+        this.init(TrainingModuleCard.html, this.#onInitBoundFunc);
+
+        if (attribName == "name")
+        {
+            this.#trainingModuleNameLabel.innerText = newValue;
+        }
+    }
+}
+
 function getHTMLForComponent(urlPath)
 {
     let componentHTMLRequest = new XMLHttpRequest();
@@ -459,6 +528,10 @@ function init()
     TeamMemberCard.html = getHTMLForComponent("/components/team-member-card.html");
 
     customElements.define("team-member-card", TeamMemberCard);
+
+    TrainingModuleCard.html = getHTMLForComponent("/components/training-module-card.html");
+
+    customElements.define("training-module-card", TrainingModuleCard);
 }
 
 export {
@@ -466,5 +539,7 @@ export {
     DiscordChatbotButton,
     DiscordChatbotPanel,
     Sidebar,
-    init
+    TeamMemberCard,
+    TrainingModuleCard,
+    init,
 };

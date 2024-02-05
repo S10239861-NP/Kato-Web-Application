@@ -2,7 +2,7 @@ import * as utils from "./libs/utils.js";
 
 import * as components from "./libs/components.js";
 
-components.init();
+let trainingModuleCardsContainer = document.querySelector("#trainingModuleCardsContainer");
 
 function drawChartForTrainingRemainingOverTime()
 {
@@ -116,12 +116,45 @@ function makeChartResponsive(chartElement)
     });
 }
 
-google.charts.load("current", { packages: ["corechart"] });
+async function updateTrainingModulesContainer()
+{
+    let getAllTrainingModulesRequest = new XMLHttpRequest();
 
-google.charts.setOnLoadCallback(
-    drawChartForTrainingRemainingOverTime
-);
+    getAllTrainingModulesRequest.open("POST", "/get-all-training-modules");
 
-google.charts.setOnLoadCallback(
-    drawChartForTasksRemainingOverTime
-);
+    getAllTrainingModulesRequest.send();
+
+    await utils.waitForResponse(getAllTrainingModulesRequest);
+
+    let allTrainingModules = JSON.parse(
+        getAllTrainingModulesRequest.responseText
+    );
+
+    for (const trainingModule of allTrainingModules)
+    {
+        let trainingModuleCard = document.createElement("training-module-card");
+
+        trainingModuleCard.setAttribute("name", trainingModule.Name);
+
+        trainingModuleCardsContainer.appendChild(trainingModuleCard);
+    }
+}
+
+async function main()
+{
+    components.init();
+
+    google.charts.load("current", { packages: ["corechart"] });
+
+    google.charts.setOnLoadCallback(
+        drawChartForTrainingRemainingOverTime
+    );
+
+    google.charts.setOnLoadCallback(
+        drawChartForTasksRemainingOverTime
+    );
+
+    await updateTrainingModulesContainer();
+}
+
+main();

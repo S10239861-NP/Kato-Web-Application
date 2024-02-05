@@ -667,48 +667,6 @@ img {
     }
 }
 
-.course-box{
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-    border-radius: .5rem;
-    background-color: white;
-    padding: 20px;
-    height: min-content;
-}
-
-.course-img {
-    border-radius: 0.5rem;
-    height: 60%;
-    object-fit: cover;
-}
-
-.course-desc {
-    font-size: 24px;
-    color: black;
-    margin: 0;
-    margin-top: 0.5rem;
-    padding: 0.5rem 0;
-}
-
-.course-btn{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border-radius: .5rem;
-    background: black;
-    color: cyan;
-    padding: 1rem;
-    font-size: 16px;
-}
-
-.course-btn:hover{
-    color: black;
-    background: cyan;
-    transition:all 0.4s ease; 
-}
-
 .e-learning-body {
     display: flex;
     flex-direction: row;

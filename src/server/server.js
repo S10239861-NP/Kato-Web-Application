@@ -396,7 +396,7 @@ function getAllTrainingModulesFromDB()
     return new Promise(
         (resolve, reject) =>
         {
-            katoDB.all("SELECT * FROM Training;", [], (error, rows) =>
+            katoDB.all("SELECT * FROM TrainingModules;", [], (error, rows) =>
             {
                 if (error != null)
                 {
@@ -409,12 +409,7 @@ function getAllTrainingModulesFromDB()
 
                 for (const row of rows)
                 {
-                    allTrainingModules.push(
-                        {
-                            name: row.Name,
-                            description: row.Description
-                        }
-                    );
+                    allTrainingModules.push(row);
                 }
 
                 resolve(allTrainingModules);
@@ -429,8 +424,10 @@ function getLessonsForTrainingModule(trainingModuleName)
         (resolve, reject) =>
         {
             katoDB.all(
-                `SELECT * FROM TrainingModuleLessons WHERE TrainingModuleLessons.TrainingModuleName = '?';`,
-                [trainingModuleName],
+                `SELECT * FROM TrainingModuleLessons WHERE TrainingModuleLessons.TrainingModuleName = $trainingModuleName;`,
+                {
+                    $trainingModuleName: trainingModuleName
+                },
                 (error, rows) =>
                 {
                     if (error != null)
@@ -444,14 +441,7 @@ function getLessonsForTrainingModule(trainingModuleName)
 
                     for (const row of rows)
                     {
-                        lessonsForTrainingModule.push(
-                            {
-                                name: row.Name,
-                                trainingModuleName: row.TrainingModuleName,
-                                description: row.Description,
-                                estimatedNumMinutesToComplete: row.EstimatedNumMinutesToComplete
-                            }
-                        );
+                        lessonsForTrainingModule.push(row);
                     }
 
                     resolve(lessonsForTrainingModule);
@@ -512,6 +502,37 @@ function getMembersOfTeamForOnboardingEmployeeFromDB(onboardingEmployeeStaffID)
                     }
 
                     resolve(rows);
+                }
+            );
+        }
+    );
+}
+
+/**
+ * 
+ * @param {string} trainingModuleLessonName 
+ * @returns 
+ */
+function getTrainingModuleLesson(trainingModuleLessonName)
+{
+    return new Promise(
+        (resolve, reject) =>
+        {
+            katoDB.get(
+                "SELECT * FROM TrainingModuleLessons WHERE Name = $trainingModuleLessonName;",
+                {
+                    $trainingModuleLessonName: trainingModuleLessonName
+                },
+                (error, row) =>
+                {
+                    if (error != null)
+                    {
+                        logError(error);
+        
+                        return;
+                    }
+
+                    resolve(row);
                 }
             );
         }
@@ -669,6 +690,29 @@ async function onRequestReceived(request, response)
             response.writeHead(200, "Success");
 
             response.write(authToken.StaffID);
+
+            response.end();
+
+            return;
+        }
+
+        if (requestURL.pathname == "/get-training-module-lesson")
+        {
+            let requestBody = await httpExtra.getRequestBody(
+                request
+            );
+
+            let requestBodyObj = JSON.parse(requestBody);
+
+            let trainingModuleLesson = await getTrainingModuleLesson(
+                requestBodyObj.trainingModuleLessonName
+            );
+
+            response.writeHead(200, "Success");
+
+            response.write(
+                JSON.stringify(trainingModuleLesson)
+            );
 
             response.end();
 
