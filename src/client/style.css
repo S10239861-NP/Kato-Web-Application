@@ -679,9 +679,14 @@ img {
 .elearning-title{
     font-size: 2rem;
     color: black;
-    padding: 1.25rem 0;
     display: flex;
     margin: 0;
+    padding-top: 2%;
+}
+
+.elearning-vid {
+    overflow-y: scroll;
+    width: 100%;
 }
 
 /* e-learning video*/
@@ -694,6 +699,25 @@ img {
     min-width: 100%;
     max-width: 100%;
     border-radius: 0.5rem;
+}
+
+.view-training-modules-btn {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    background-color: black;
+    color: white;
+    border: 0;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.view-training-modules-btn:hover {
+    background-color: aqua;
+    color: black;
+    transition: all 0.5s ease;
 }
 
 /* .vid-desc{
