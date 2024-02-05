@@ -179,8 +179,9 @@ img {
     overflow-y: auto;
 }
 
-.details{
+.details {
     display: none;
+    overflow-y: auto;
 }
 
 .details.active{
@@ -370,6 +371,7 @@ img {
     flex-direction: column;
     height: 100%;
     width: 100%;
+    overflow-y: auto;
 }
 
 .dashboard_pg{
@@ -740,13 +742,12 @@ img {
     font-size: 20px;
 }
 
-.team-container{
+.team-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: 1.5rem;
     align-items: flex-start;
     justify-content: center;
-    overflow-y: auto;
 }
 
 .theTeam{
@@ -757,6 +758,7 @@ img {
     height: auto;
     background-color: aliceblue;
     padding: 1.5rem;
+    overflow-y: auto;
 }
 
 .teamHeading{

@@ -189,4 +189,7 @@ An alternative to using React would be to instead use the native browser's custo
 - Data Security and Privacy Training
 - Communication and Collaboration Training
 
+## Observations made while attempting to fix sidebar not fitting the entire screen's height (on PC and on mobile) when the content of the body overflows vertically
+Setting the "overflow" or "overflow-y" property of the neighbouring element (the one that is overflowing) of the sidebar element to a value such as "auto" or "scroll" fixes the issue with sidebar's height being lesser than the viewport's height (both on PC and mobile) when the content of a neighbouring element of the sidebar element overflows vertically.
+
 

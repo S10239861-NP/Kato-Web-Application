@@ -76,6 +76,18 @@ async function getResponseText(request)
     return request.responseText;
 }
 
+/**
+ * 
+ * @param {number} minValue An inclusive minimum value.
+ * @param {number} maxValue An inclusive maximum value.
+ */
+function getRandomInteger(minValue, maxValue)
+{
+    return Math.floor(
+        Math.random() * maxValue
+    ) + minValue;
+}
+
 export {
     getFloatFromPixelMeasurementString,
     getActualWidthOfElement,
@@ -83,4 +95,5 @@ export {
     getViewportSize,
     waitForResponse,
     getResponseText,
+    getRandomInteger,
 };

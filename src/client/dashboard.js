@@ -4,16 +4,26 @@ import * as components from "./libs/components.js";
 
 let trainingModuleCardsContainer = document.querySelector("#trainingModuleCardsContainer");
 
-function drawChartForTrainingRemainingOverTime()
+let trainingModules = [];
+
+function drawChartForPercentageOfRemainingLessonsPerModule()
 {
+    let dataAsArray = [
+        ["Remaining lessons", "Percentage"]
+    ];
+
+    for (const trainingModule of trainingModules)
+    {
+        dataAsArray.push(
+            [
+                trainingModule.Name,
+                1
+            ]
+        );
+    }
+
     let data = google.visualization.arrayToDataTable(
-        [
-            ["Training", "left"],
-            ["A", 1],
-            ["B", 4],
-            ["C", 2],
-            ["D", 3],
-        ]
+        dataAsArray
     );
 
     let options = {
@@ -116,7 +126,7 @@ function makeChartResponsive(chartElement)
     });
 }
 
-async function updateTrainingModulesContainer()
+async function getTrainingModules()
 {
     let getAllTrainingModulesRequest = new XMLHttpRequest();
 
@@ -130,7 +140,12 @@ async function updateTrainingModulesContainer()
         getAllTrainingModulesRequest.responseText
     );
 
-    for (const trainingModule of allTrainingModules)
+    return allTrainingModules;
+}
+
+async function updateTrainingModulesContainer()
+{
+    for (const trainingModule of trainingModules)
     {
         let trainingModuleCard = document.createElement("training-module-card");
 
@@ -144,14 +159,16 @@ async function main()
 {
     components.init();
 
+    trainingModules = await getTrainingModules();
+
     google.charts.load("current", { packages: ["corechart"] });
 
     google.charts.setOnLoadCallback(
-        drawChartForTrainingRemainingOverTime
+        drawChartForTasksRemainingOverTime
     );
 
     google.charts.setOnLoadCallback(
-        drawChartForTasksRemainingOverTime
+        drawChartForPercentageOfRemainingLessonsPerModule
     );
 
     await updateTrainingModulesContainer();
